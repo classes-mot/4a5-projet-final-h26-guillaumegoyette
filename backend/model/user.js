@@ -23,3 +23,5 @@ const userSchema = new mongoose.Schema({
     lastPlayed: Date,
   },
 });
+
+export const User = mongoose.model("User", userSchema);
