@@ -17,5 +17,9 @@ const userSchema = new mongoose.Schema({
       storage: null,
       AI: null,
     },
+    required: true,
+  },
+  music: {
+    lastPlayed: Date,
   },
 });
