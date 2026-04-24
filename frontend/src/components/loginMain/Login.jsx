@@ -52,7 +52,7 @@ export default function Login() {
         <h2>Login</h2>
 
         <div className="input_form">
-          <div className="input_lane">
+          <div className="input_line">
             <label htmlFor="username">Username</label>
             <input
               id="username"
@@ -64,6 +64,26 @@ export default function Login() {
               value={entredValues.username}
             />
           </div>
+
+          <div className="input_line">
+            <label htmlFor="password">Password</label>"
+            <input
+              id="password"
+              type="password"
+              name="password"
+              onChange={(event) =>
+                handleInputChange("password", event.target.value)
+              }
+              value={entredValues.password}
+            />
+          </div>
+
+          <p className="form-input">
+            <button className="button">Login</button>
+            <Link to="/register">
+              <button className="button button-flat">Register</button>
+            </Link>
+          </p>
         </div>
       </form>
     </>
