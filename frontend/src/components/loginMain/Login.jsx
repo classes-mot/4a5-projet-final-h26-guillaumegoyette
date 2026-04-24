@@ -49,11 +49,11 @@ export default function Login() {
         <ModalMessageErreur message={error} onClose={() => clearError()} />
       </div>
       <form onSubmit={authSubmitHandler}>
-        <h2>Login</h2>
+        <h2>Login *TRANSLATE*</h2>
 
         <div className="input_form">
           <div className="input_line">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username *TRANSLATE*</label>
             <input
               id="username"
               type="username"
@@ -66,7 +66,7 @@ export default function Login() {
           </div>
 
           <div className="input_line">
-            <label htmlFor="password">Password</label>"
+            <label htmlFor="password">Password *TRANSLATE*</label>"
             <input
               id="password"
               type="password"
@@ -81,7 +81,9 @@ export default function Login() {
           <p className="form-input">
             <button className="button">Login</button>
             <Link to="/register">
-              <button className="button button-flat">Register</button>
+              <button className="button button-flat">
+                Register *TRANSLATE*
+              </button>
             </Link>
           </p>
         </div>

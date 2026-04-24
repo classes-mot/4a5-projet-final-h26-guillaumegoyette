@@ -4,6 +4,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useState, useCallback } from "react";
+import RootLayout from "../Containers/Roots";
+import ErrorPage from "../Containers/ErrorPage";
 import { AuthContext } from "../context/auth-context";
 
 const routerLogin = createBrowserRouter([
