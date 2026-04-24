@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
+import { randomUUID } from "crypto";
 
 const userSchema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.UUID,
+    default: () => randomUUID(), //supposer de generer un UUID
+  },
   user: { type: String, required: true },
   password: { type: String, required: true },
   fullName: { type: String, required: true },
