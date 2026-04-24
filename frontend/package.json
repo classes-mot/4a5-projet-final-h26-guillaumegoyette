@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "node.js": "^0.0.1-security",
-    "react": "^19.2.5"
+    "react": "^19.2.5",
+    "vite": "^8.0.10"
   }
 }
