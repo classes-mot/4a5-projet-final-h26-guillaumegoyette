@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 
 const App = () => {
   const [token, setToken] = useState(null);
-  const [userID, setUserId] = useState(false);
+  const [userId, setUserId] = useState(false);
 
   const login = useCallback((uid, token) => {
     setToken(token);
@@ -40,7 +40,7 @@ const App = () => {
   }, []);
   if (token !== null) {
     return (
-      <AuthContext.provider
+      <AuthContext.Provider
         value={{
           isLoggedIn: true,
           token: token,
@@ -50,11 +50,11 @@ const App = () => {
         }}
       >
         <RouterProvider router={routerLogin} />
-      </AuthContext.provider>
+      </AuthContext.Provider>
     );
   } else {
     return (
-      <AuthContext.provider
+      <AuthContext.Provider
         value={{
           isLoggedIn: false,
           token: token,
@@ -64,7 +64,7 @@ const App = () => {
         }}
       >
         <RouterProvider router={router} />
-      </AuthContext.provider>
+      </AuthContext.Provider>
     );
   }
 };
