@@ -7,6 +7,8 @@ import SmallSong from "../small/song/SmallSong";
 
 export default function MusicMain() {
   const [lastestSong, setLatestSong] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const auth = useContext(AuthContext);
 
   const fetchLastest = async () => {
@@ -29,6 +31,28 @@ export default function MusicMain() {
     }
   };
 
+  const handleSearch = async (query) => {
+    if (!query || !query.trim()) {
+      setSearchResults([]);
+      setSearchQuery("");
+      return;
+    }
+
+    setSearchQuery(query);
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/music/${query}`, {
+        headers: { authorization: "Bearer " + auth.token },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setSearchResults(data.songs || []);
+      }
+    } catch (err) {
+      console.err("Search Failed", err);
+    }
+  };
+
   useEffect(() => {
     if (auth.token) fetchLastest();
   }, [auth.token]);
@@ -36,8 +60,30 @@ export default function MusicMain() {
     <>
       <HeaderMusic onSongAdded={fetchLastest} />
       <div className="search-barMain">
-        Here is the search bar <SearchBar />
+        <SearchBar onSearch={handleSearch} />
       </div>
+
+      {searchResults.length > 0 && (
+        <div className="searchResults">
+          <h2>Search Results</h2>
+          <div className="songs-grid">
+            {searchResults.slice(0, 8).map((song) => (
+              <SmallSong
+                key={song._id || song.id}
+                id={song._id || song.id}
+                title={song.title}
+                artist={song.artist}
+                filetype={song.fileType}
+                location={song.fileLocation}
+                onUpdate={() => {
+                  fetchLastest();
+                  handleSearch(searchQuery); // Now searchQuery is defined!
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
       <div className="lastAdded">
         <h2>Here is the last added song</h2>
         {lastestSong ? (
