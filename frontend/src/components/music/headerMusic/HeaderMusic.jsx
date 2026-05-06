@@ -2,7 +2,11 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/auth-context";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
+import AddSongPrompt from "../../UIElements/addSongPrompt";
 
+function addsong() {
+  return <addSongPrompt />;
+}
 export default function HeaderMusic() {
   const { user } = useContext(AuthContext);
   const musicRole = user?.perms?.music;
