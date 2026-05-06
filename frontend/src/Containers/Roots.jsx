@@ -16,23 +16,24 @@ const RootLayout = ({ serverString }) => {
   return (
     <div className="app-container">
       <header>
-        {isModule &&
+        {isLoggedIn &&
+          isModule &&
           ((
             <button onClick={() => navigate("/hub")}> Back TRANSLATE </button>
           ) || (
             <button onClick={() => navigate("/")}> logout TRANSLATE </button>
           ))}
-        {isHubPage && (
+        {isLoggedIn && isHubPage && (
           <button onClick={() => navigate("/")}> Logout TRANSLATE </button>
         )}
         <strong>{serverString}</strong>
-        {isModule && (
+        {isLoggedIn && isModule && (
           <button onClick={() => navigate(`/user/${location}`)}>
             {" "}
             {user.username}{" "}
           </button>
         )}
-        {isHubPage && (
+        {isLoggedIn && isHubPage && (
           <button onClick={() => navigate("/")}> {user.username} </button>
         )}
       </header>
