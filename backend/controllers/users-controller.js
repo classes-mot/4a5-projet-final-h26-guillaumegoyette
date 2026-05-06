@@ -4,9 +4,9 @@ import { v4 as uuid } from "uuid";
 let MOCK_USERS = [
   {
     id: "u1",
-    username: "admin",
-    email: "admin",
-    password: "admin",
+    username: "a",
+    email: "a",
+    password: "a",
     perms: { login: "admin", music: "admin" },
   },
 ];

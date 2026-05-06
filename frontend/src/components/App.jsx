@@ -7,12 +7,20 @@ import { useState, useCallback } from "react";
 //import RootLayout from "../Containers/Roots";
 import ErrorPage from "../Containers/ErrorPage";
 import { AuthContext } from "../context/auth-context";
-import Login from "./loginMain/Login";
+import Login from "./login/loginMain/Login";
+import Hub from "./login/hub/Hub";
 
 const routerLogin = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+    errorElement: <ErrorPage />,
+    children: [{}],
+  },
+
+  {
+    path: "/hub",
+    element: <Hub />,
     errorElement: <ErrorPage />,
     children: [{}],
   },
@@ -24,6 +32,17 @@ const router = createBrowserRouter([
     element: <Login />,
     errorElement: <ErrorPage />,
     children: [{}],
+  },
+
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
+    errorElement: <ErrorPage />,
+  },
+
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

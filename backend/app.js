@@ -8,7 +8,7 @@ import { connectDB } from "./utils/bd.js";
 
 console.log("Connection DB");
 
-await connectDB();
+//await connectDB();
 
 console.log("CreationApp");
 const app = express();
