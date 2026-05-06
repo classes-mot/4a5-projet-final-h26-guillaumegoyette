@@ -20,6 +20,35 @@ const lastSong = async (req, res, next) => {
   }
 };
 
+const searchSongs = async (req, res, next) => {
+  const query = req.params.query;
+  //FOR MOCK
+  const results = MOCK_MUSIC_LIST.filter((song) => {
+    const data = song._doc || song;
+    const titleMatch = data.title?.toLowerCase().includes(query.toLowerCase());
+    const artistMatch = data.artist
+      ?.toLowerCase()
+      .includes(query.toLowerCase());
+    return titleMatch || artistMatch;
+  });
+
+  //FOR BD
+  /*let results;
+  try {
+    results = await Song.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { artist: { $regex: query, $options: "i" } },
+      ],
+    });
+  } catch (err) {
+    return next(new HttpError("Searching failed, please try again.", 500));
+  } */
+  res.status(200).json({
+    songs: results.map((s) => s._doc || s),
+  });
+};
+
 const sendMusic = async (req, res, next) => {
   if (!req.file) {
     return next(new HttpError("No file provided", 422));
@@ -135,4 +164,5 @@ export default {
   lastSong,
   deleteSong,
   modifySong,
+  searchSongs,
 };

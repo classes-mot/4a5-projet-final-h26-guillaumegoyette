@@ -41,9 +41,13 @@ export default function MusicMain() {
     setSearchQuery(query);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/music/${query}`, {
-        headers: { authorization: "Bearer " + auth.token },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/music/songs/${query}`,
+        {
+          method: "GET",
+          headers: { authorization: "Bearer " + auth.token },
+        },
+      );
       const data = await response.json();
       if (response.ok) {
         setSearchResults(data.songs || []);

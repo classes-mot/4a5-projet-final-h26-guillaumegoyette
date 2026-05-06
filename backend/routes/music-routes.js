@@ -9,6 +9,8 @@ router.use(checkAuth);
 
 router.get("/lastSong", musicController.lastSong);
 
+router.get("/songs/:query", musicController.searchSongs);
+
 router.post("/send", fileUpload.single("audio"), musicController.sendMusic);
 
 router.patch("/:songId/update", musicController.modifySong);
