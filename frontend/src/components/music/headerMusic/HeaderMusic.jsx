@@ -4,7 +4,7 @@ import { AuthContext } from "../../../context/auth-context";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
 import AddSongPrompt from "../../UIElements/addSongPrompt";
 
-export default function HeaderMusic() {
+export default function HeaderMusic({ onSongAdded }) {
   const { user } = useContext(AuthContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +23,9 @@ export default function HeaderMusic() {
           Add song
         </div>
       )}
-      {isModalOpen && <AddSongPrompt onClose={closeModal} />}
+      {isModalOpen && (
+        <AddSongPrompt onClose={closeModal} onSongAdded={onSongAdded} />
+      )}
     </>
   );
 }

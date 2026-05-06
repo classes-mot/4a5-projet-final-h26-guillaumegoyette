@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import * as mm from "music-metadata";
 import { AuthContext } from "../../context/auth-context";
-const AddSongPrompt = ({ onClose }) => {
-  const auth = useContext(AuthContext);
+const AddSongPrompt = ({ onClose, onSongAdded }) => {
+  const { user, token } = useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [metadata, setMetadata] = useState({ title: "", artist: "" });
   const [isLoading, setIsLoading] = useState(false);
@@ -39,11 +39,13 @@ const AddSongPrompt = ({ onClose }) => {
       const response = await fetch("http://localhost:5000/api/music/send", {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + auth.token,
+          Authorization: "Bearer " + token,
         },
         body: formData,
       });
-
+      if (response.ok) {
+        onSongAdded();
+      }
       if (!response.ok) throw new Error("Upload failed");
       onClose();
     } catch (err) {

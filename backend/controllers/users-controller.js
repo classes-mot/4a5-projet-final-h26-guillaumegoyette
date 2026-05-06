@@ -7,7 +7,7 @@ let MOCK_USERS = [
     username: "a",
     email: "a",
     password: "a",
-    perms: { login: "admin", music: "admin" },
+    perms: { admin: "admin", music: "admin" },
   },
 ];
 
