@@ -3,7 +3,6 @@ import "./Hub.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/auth-context";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
-import Square from "../../UIElements/LoadingSquare";
 import HubModule from "../hubModules/HubModule";
 
 export default function Hub() {

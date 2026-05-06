@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
-import Square from "../../UIElements/LoadingSquare";
 import { AuthContext } from "../../../context/auth-context";
 
 export default function Register() {
@@ -60,7 +59,7 @@ export default function Register() {
   return (
     <>
       <div>
-        {isLoading && <Square />}
+        {isLoading}
         <ModalMessageErreur message={error} onClose={() => clearError()} />
       </div>
       <form onSubmit={handleSubmit}>

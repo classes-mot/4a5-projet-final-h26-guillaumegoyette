@@ -34,10 +34,10 @@ const RootLayout = ({ serverString }) => {
         )}
         <strong>{serverString}</strong>
         {isLoggedIn && isModule && !isUserPage && (
-          <button onClick={() => navigate(`/users/${user?.id}/${location}`)}>
-            {" "}
-            {user.username}{" "}
-          </button>
+          //<button onClick={() => navigate(`/users/${user?.id}/${location}`)}>
+
+          <span> user: {user.username} </span>
+          //</button>
         )}
 
         {isLoggedIn && isHubPage && (

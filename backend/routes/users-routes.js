@@ -9,7 +9,6 @@ router.post("/login", usersController.login);
 
 router.post("/register", usersController.register);
 
-//http://localhost:5000/api/users/$id/permsChange;
 router.patch("/:userId/permsChange", usersController.permsChange);
 
 export default router;

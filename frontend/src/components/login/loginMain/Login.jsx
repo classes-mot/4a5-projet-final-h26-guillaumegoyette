@@ -3,7 +3,6 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/auth-context.js";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
-import Squared from "../../UIElements/LoadingSquare";
 import { useHttpClient } from "../../../hooks/http-hook";
 
 export default function Login() {
@@ -50,7 +49,7 @@ export default function Login() {
   return (
     <>
       <div>
-        {isLoading && <Squared />}
+        {isLoading}
         <ModalMessageErreur message={error} onClose={() => clearError()} />
       </div>
       <form onSubmit={authSubmitHandler}>
