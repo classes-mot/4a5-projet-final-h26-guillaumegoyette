@@ -10,19 +10,19 @@ console.log("Connection DB");
 await connectDB();
 
 console.log("CreationApp");
+const express = require("express");
+const cors = require("cors");
 const app = express();
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-AllowHeaders",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-  );
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
-  next();
-});
+app.use(
+  cors({
+    origin: "*", // In production, replace with your actual frontend URL
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 app.use("/api/users", userRoutes);
 

@@ -1,6 +1,16 @@
 import jwt from "jsonwebtoken";
 import { v4 as uuid } from "uuid";
 
+let MOCK_USERS = [
+  {
+    id: "u1",
+    username: "admin",
+    email: "admin",
+    password: "admin",
+    perms: { login: "admin", music: "admin" },
+  },
+];
+
 const getUsers = (req, res, next) => {
   setTimeout(() => {
     res.json({ users: MOCK_USERS });
@@ -49,4 +59,9 @@ const login = (req, res, next) => {
       token: token,
     });
   }
+};
+
+export default {
+  getUsers,
+  login,
 };
