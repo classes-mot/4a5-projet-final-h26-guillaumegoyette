@@ -56,13 +56,56 @@ const sendMusic = async (req, res, next) => {
   }
 };
 
+const modifySong = async (req, res, next) => {
+  const songId = req.params.songId;
+  const { title, artist } = req.body;
+
+  //FOR MOCK
+  const songIndex = MOCK_MUSIC_LIST.findIndex(
+    (s) => (s._id || s.id).toString() === songId.toString(),
+  );
+
+  if (songIndex !== -1) {
+    // If it's a Mongoose object from 'new Song()', the data is in _doc
+    const currentSongData =
+      MOCK_MUSIC_LIST[songIndex]._doc || MOCK_MUSIC_LIST[songIndex];
+
+    MOCK_MUSIC_LIST[songIndex] = {
+      ...currentSongData,
+      title: title || currentSongData.title,
+      artist: artist || currentSongData.artist,
+    };
+    // Return early so the response is sent immediately
+    return res.status(200).json({
+      message: "Chanson modifiée (MOCK)",
+      song: MOCK_MUSIC_LIST[songIndex],
+    });
+  }
+
+  /*
+  try {
+    const updatedSong = await Song.findByIdAndUpdate(
+      songId,
+      { title, artist },
+      { new: true, runValidators: true }
+    );
+    if (!updatedSong) return next(new HttpError("Could not find song.", 404));
+    res.status(200).json({ message: "Chanson modifiée" });
+  } catch (err) {
+    return next(new HttpError("Update failed", 500));
+  }
+  */
+};
+
 const deleteSong = async (req, res, next) => {
   const songId = req.params.songId;
   try {
     //FOR DB
     //const song = await Song.findById(songId);
     //FOR MOCK
-    const songIndex = MOCK_MUSIC_LIST.findIndex((s) => s.id === songId);
+    const songIndex = MOCK_MUSIC_LIST.findIndex(
+      (s) => (s._id || s.id).toString() === songId.toString(),
+    );
     const song = MOCK_MUSIC_LIST[songIndex];
 
     if (!song) {
@@ -83,7 +126,7 @@ const deleteSong = async (req, res, next) => {
 
     res.status(200).json({ message: "Deleted Song" });
   } catch (err) {
-    return next(new HttpError("Could not delete song"));
+    return next(new HttpError("Could not delete song"), 500);
   }
 };
 
@@ -91,4 +134,5 @@ export default {
   sendMusic,
   lastSong,
   deleteSong,
+  modifySong,
 };

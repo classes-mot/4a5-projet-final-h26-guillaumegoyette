@@ -77,7 +77,7 @@ export default function SmallSong({
       </div>
       {isModifying && (
         <ModifySongModal
-          song={{ id, title, artist }}
+          song={{ id: id, title, artist }}
           onClose={() => setIsModifying(false)}
           onUpdate={onUpdate}
         />
