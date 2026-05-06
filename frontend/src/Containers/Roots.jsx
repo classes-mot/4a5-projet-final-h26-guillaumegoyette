@@ -12,6 +12,7 @@ const RootLayout = ({ serverString }) => {
     location.pathname !== "/" &&
     location.pathname !== "/hub" &&
     location.pathname !== "/register";
+  const isUserPage = location.pathname !== "user/:userid";
 
   const handleLogout = () => {
     logout();
@@ -32,7 +33,7 @@ const RootLayout = ({ serverString }) => {
           <button onClick={handleLogout}> Logout TRANSLATE </button>
         )}
         <strong>{serverString}</strong>
-        {isLoggedIn && isModule && (
+        {isLoggedIn && isModule && !isUserPage && (
           <button onClick={() => navigate(`/user/${user?.id}/${location}`)}>
             {" "}
             {user.username}{" "}
