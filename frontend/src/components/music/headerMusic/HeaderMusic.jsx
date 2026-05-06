@@ -4,12 +4,26 @@ import { AuthContext } from "../../../context/auth-context";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
 import AddSongPrompt from "../../UIElements/addSongPrompt";
 
-function addsong() {
-  return <addSongPrompt />;
-}
 export default function HeaderMusic() {
   const { user } = useContext(AuthContext);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const musicRole = user?.perms?.music;
+
   const canAddSong = musicRole === "curator" || musicRole === "admin";
-  return <>{canAddSong && <div onClick={() => addsong()}>addsong</div>}</>;
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  return (
+    <>
+      {canAddSong && (
+        <div onClick={openModal} style={{ cursor: "pointer" }}>
+          Add song
+        </div>
+      )}
+      {isModalOpen && <AddSongPrompt onClose={closeModal} />}
+    </>
+  );
 }
