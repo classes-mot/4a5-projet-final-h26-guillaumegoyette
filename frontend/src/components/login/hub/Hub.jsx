@@ -5,6 +5,7 @@ import { AuthContext } from "../../../context/auth-context";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
 import Square from "../../UIElements/LoadingSquare";
 import HubHeader from "../hubHeader/HubHeader";
+import HubModule from "../hubModules/HubModule";
 
 export default function Hub() {
   const navigate = useNavigate();

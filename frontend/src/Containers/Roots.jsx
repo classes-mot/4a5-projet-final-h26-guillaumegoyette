@@ -1,14 +1,20 @@
 import { useState, useCallback } from "react";
-
 import { Outlet } from "react-router-dom";
-import { AuthContext } from "../context/auth-context";
 
-export default function RootLayout() {
+const RootLayout = ({ serverString }) => {
   return (
-    <>
+    <div className="app-container">
+      <header
+        style={{ background: "#eee", padding: "10px", textAlign: "center" }}
+      >
+        <strong>{serverString}</strong>
+      </header>
+
       <main>
-        <Outlet />
+        <Outlet context={{ serverString }} />
       </main>
-    </>
+    </div>
   );
-}
+};
+
+export default RootLayout;

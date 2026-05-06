@@ -4,45 +4,36 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useState, useCallback } from "react";
-//import RootLayout from "../Containers/Roots";
+import RootLayout from "../Containers/Roots";
 import ErrorPage from "../Containers/ErrorPage";
 import { AuthContext } from "../context/auth-context";
 import Login from "./login/loginMain/Login";
 import Hub from "./login/hub/Hub";
 
+const SERVER_NAME = import.meta.env.VITE_SERVER_NAME || "Default server";
+const SERVER_STRING = `MMDSA: ${SERVER_NAME}`;
+
 const routerLogin = createBrowserRouter([
   {
     path: "/",
-    element: <Login />,
+    element: <RootLayout serverString={SERVER_STRING} />, // Wrapper
     errorElement: <ErrorPage />,
-    children: [{}],
-  },
-
-  {
-    path: "/hub",
-    element: <Hub />,
-    errorElement: <ErrorPage />,
-    children: [{}],
+    children: [
+      { path: "hub", element: <Hub /> },
+      { path: "/", element: <Navigate to="/hub" replace /> },
+    ],
   },
 ]);
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login />,
+    element: <RootLayout serverString={SERVER_STRING} />, // Wrapper
     errorElement: <ErrorPage />,
-    children: [{}],
-  },
-
-  {
-    path: "*",
-    element: <Navigate to="/" replace />,
-    errorElement: <ErrorPage />,
-  },
-
-  {
-    path: "*",
-    element: <ErrorPage />,
+    children: [
+      { path: "/", element: <Login /> },
+      { path: "*", element: <Navigate to="/" replace /> },
+    ],
   },
 ]);
 
