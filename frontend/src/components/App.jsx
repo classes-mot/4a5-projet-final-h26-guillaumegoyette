@@ -4,14 +4,15 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useState, useCallback } from "react";
-import RootLayout from "../Containers/Roots";
+//import RootLayout from "../Containers/Roots";
 import ErrorPage from "../Containers/ErrorPage";
 import { AuthContext } from "../context/auth-context";
+import Login from "./loginMain/Login";
 
 const routerLogin = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: <Login />,
     errorElement: <ErrorPage />,
     children: [{}],
   },
@@ -20,7 +21,7 @@ const routerLogin = createBrowserRouter([
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: <Login />,
     errorElement: <ErrorPage />,
     children: [{}],
   },

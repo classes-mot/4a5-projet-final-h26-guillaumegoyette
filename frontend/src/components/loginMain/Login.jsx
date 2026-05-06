@@ -3,7 +3,7 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 import ModalMessageErreur from "../UIElements/ModalMessageErreur";
-import Squared from "../UIElements/loadingSquare";
+import Squared from "../UIElements/LoadingSquare";
 import { useHttpClient } from "../../hooks/http-hook";
 
 export default function Login() {
