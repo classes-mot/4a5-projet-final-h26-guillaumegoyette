@@ -9,7 +9,7 @@ export default function HubModule(props) {
   const imgLocation = `../../../data/${props.label}`;
   const navigate = useNavigate();
   function buttonNavigate() {
-    navigateTo(props.path);
+    navigate(props.path);
   }
 
   return (

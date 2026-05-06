@@ -6,7 +6,7 @@ const RootLayout = ({ serverString }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout, isLoggedIn } = useContext(AuthContext);
-  console.log("CURRENT USER STATE:", user);
+
   const isHubPage = location.pathname === "/hub";
   const isModule =
     location.pathname !== "/" &&

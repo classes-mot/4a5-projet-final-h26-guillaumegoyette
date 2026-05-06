@@ -44,7 +44,7 @@ export default function Register() {
         username: responseData.username,
         perms: responseData.perms,
       });
-      navigate("/");
+      navigate("/hub");
     } catch (err) {
       setError(
         err.message || "There's been an error, try again later. TRANSLATE",
@@ -86,7 +86,7 @@ export default function Register() {
                 <input
                   id="confirm-password"
                   type="password"
-                  name="confiorm-password"
+                  name="confirm-password"
                   required
                 />
                 {passwordAreNotEqual ? (
