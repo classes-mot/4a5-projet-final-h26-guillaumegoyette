@@ -11,6 +11,10 @@ router.get("/lastSong", musicController.lastSong);
 
 router.get("/songs/:query", musicController.searchSongs);
 
+router.get("/:songId/download", musicController.downloadSong);
+
+router.get("/:songId/streaming", musicController.streamSong);
+
 router.post("/send", fileUpload.single("audio"), musicController.sendMusic);
 
 router.patch("/:songId/update", musicController.modifySong);

@@ -49,6 +49,50 @@ const searchSongs = async (req, res, next) => {
   });
 };
 
+const downloadSong = async (req, res) => {
+  const songId = req.params.songId;
+  const song = MOCK_MUSIC_LIST.find((s) => s._id === songId);
+  const filePath = path.join(process.env.MUSIC_UPLOAD_PATH, song.fileLocation);
+  res.download(filePath, `${song.title}.${song.fileType}`);
+};
+
+const streamSong = async (req, res, next) => {
+  const songId = req.params.songId;
+  let song;
+  console.log("Attemp to play song.");
+  // MOCK CHECK
+  song = MOCK_MUSIC_LIST.find((s) => (s._id || s.id).toString() === songId);
+
+  // FOR DB
+  /*
+  if (!song) {
+    try {
+      song = await Song.findById(songId);
+    } catch (err) {
+      return next(new HttpError("Could not find song in database.", 500));
+    }
+  }
+  */
+
+  if (!song) {
+    return res.status(404).json({ message: "Song not found" });
+  }
+
+  const songData = song._doc || song;
+  const filePath = path.join(
+    process.env.MUSIC_UPLOAD_PATH,
+    songData.fileLocation,
+  );
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ message: "Audio file not found on server" });
+  }
+
+  // Set headers and stream
+  res.setHeader("Content-Type", songData.fileType || "audio/mpeg");
+  res.sendFile(filePath);
+};
+
 const sendMusic = async (req, res, next) => {
   if (!req.file) {
     return next(new HttpError("No file provided", 422));
@@ -165,4 +209,6 @@ export default {
   deleteSong,
   modifySong,
   searchSongs,
+  streamSong,
+  downloadSong,
 };

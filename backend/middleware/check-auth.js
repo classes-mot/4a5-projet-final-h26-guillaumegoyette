@@ -6,14 +6,23 @@ const checkAuth = (req, res, next) => {
     if (req.method === "OPTIONS") {
       return next();
     }
-    const token = req.headers.authorization.split(" ")[1];
-    if (!token) {
-      throw new Error("Authentification failed");
+    let token;
+
+    if (req.headers.authorization) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.query.token) {
+      token = req.query.token;
     }
+
+    if (!token) {
+      console.log("No token found in headers or query");
+      throw new Error("Authentication failed");
+    }
+
     const decodedToken = jwt.verify(token, "cleSuperSecrete!");
     console.log("---avant---");
     console.log(req.userData);
-    req.userData = { userId: decodedToken.id };
+    req.userData = { userId: decodedToken.id || decodedToken.userId };
     console.log("---apres---");
     console.log(req.userData);
     next();

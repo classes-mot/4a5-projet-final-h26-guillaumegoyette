@@ -16,7 +16,8 @@ export default function SmallSong({
   const [isModifying, setIsModifying] = useState(false);
 
   const musicRole = user?.perms?.music;
-
+  const canListen =
+    musicRole === "curator" || musicRole === "admin" || musicRole === "enjoyer";
   const canAddSong = musicRole === "curator" || musicRole === "admin";
   const canModnDelete = musicRole === "admin";
 
@@ -62,6 +63,14 @@ export default function SmallSong({
         </dl>
       </div>
       <div className="small-song-buttons">
+        {canListen && (
+          <audio
+            controls
+            src={`http://localhost:5000/api/music/${id}/streaming?token=${token}`}
+          >
+            Your browser does not support the audio element.
+          </audio>
+        )}
         {canModnDelete && (
           <button onClick={() => setIsModifying(true)}>Modify</button>
         )}
