@@ -11,4 +11,6 @@ router.get("/lastSong", musicController.lastSong);
 
 router.post("/send", fileUpload.single("audio"), musicController.sendMusic);
 
+router.delete("/:songId/delete", musicController.deleteSong);
+
 export default router;

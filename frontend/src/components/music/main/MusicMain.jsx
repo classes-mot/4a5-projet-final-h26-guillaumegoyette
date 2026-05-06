@@ -45,6 +45,7 @@ export default function MusicMain() {
             artist={lastestSong.artist}
             filetype={lastestSong.fileType}
             location={lastestSong.fileLocation}
+            id={lastestSong._id}
           />
         ) : (
           <p>loading lastest song...</p>

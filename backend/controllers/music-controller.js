@@ -1,5 +1,7 @@
 import { Song } from "../model/music.js";
 import HttpError from "../utils/http-error.js";
+import fs from "fs";
+import path from "path";
 
 let MOCK_MUSIC_LIST = [];
 
@@ -54,7 +56,39 @@ const sendMusic = async (req, res, next) => {
   }
 };
 
+const deleteSong = async (req, res, next) => {
+  const songId = req.params.songId;
+  try {
+    //FOR DB
+    //const song = await Song.findById(songId);
+    //FOR MOCK
+    const songIndex = MOCK_MUSIC_LIST.findIndex((s) => s.id === songId);
+    const song = MOCK_MUSIC_LIST[songIndex];
+
+    if (!song) {
+      return next(new HttpError("Could not find song for this id.", 404));
+    }
+    const filePath = path.join(
+      process.env.MUSIC_UPLOAD_PATH,
+      song.fileLocation,
+    );
+
+    fs.unlink(filePath, (err) => {
+      if (err) console.log("failed to delete file:", err);
+    });
+    //FOR DB
+    //await song.remove();
+    //FOR MOCK
+    MOCK_MUSIC_LIST.splice(songIndex, 1);
+
+    res.status(200).json({ message: "Deleted Song" });
+  } catch (err) {
+    return next(new HttpError("Could not delete song"));
+  }
+};
+
 export default {
   sendMusic,
   lastSong,
+  deleteSong,
 };

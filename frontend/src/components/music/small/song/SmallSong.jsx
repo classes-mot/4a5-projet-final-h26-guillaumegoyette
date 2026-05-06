@@ -1,15 +1,36 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../context/auth-context";
 import ModalMessageErreur from "../../../UIElements/ModalMessageErreur";
 
-export default function SmallSong({ title, artist, filetype, location }) {
+export default function SmallSong({ title, artist, filetype, location, id }) {
   const { user } = useContext(AuthContext);
 
   const musicRole = user?.perms?.music;
 
   const canAddSong = musicRole === "curator" || musicRole === "admin";
   const canModnDelete = musicRole === "admin";
+
+  const deleteSong = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/music/${id}/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + user.token,
+          },
+        },
+      );
+      const message = await response.json();
+      if (response.ok) {
+        console.log("The song has been deleted successfully.");
+      }
+    } catch (err) {
+      console.error("Failed to delete song", err);
+    }
+  };
+
   return (
     <>
       <div className="small-song-card">
@@ -26,7 +47,15 @@ export default function SmallSong({ title, artist, filetype, location }) {
       </div>
       <div className="small-song-buttons">
         {canModnDelete && <button>Modify</button>}
-        {canModnDelete && <button>Delete</button>}
+        {canModnDelete && (
+          <button
+            onClick={() => {
+              deleteSong();
+            }}
+          >
+            Delete
+          </button>
+        )}
       </div>
     </>
   );
