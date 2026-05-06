@@ -7,10 +7,15 @@ import { useState, useCallback } from "react";
 import RootLayout from "../Containers/Roots";
 import ErrorPage from "../Containers/ErrorPage";
 import { AuthContext } from "../context/auth-context";
+
+//Login
 import Login from "./login/loginMain/Login";
 import Hub from "./login/hub/Hub";
 import Register from "./login/register/Register";
 import UserPage from "./login/userPage/UserPage";
+
+//Music
+import MusicMain from "./music/main/MusicMain";
 
 const SERVER_NAME = import.meta.env.VITE_SERVER_NAME || "Default server";
 const SERVER_STRING = `MMDSA: ${SERVER_NAME}`;
@@ -22,6 +27,7 @@ const routerLogin = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "hub", element: <Hub /> },
+      { path: "module/music", element: <MusicMain /> },
       { path: `users/:userId`, element: <UserPage /> },
       { path: "/", element: <Navigate to="/hub" replace /> },
     ],
