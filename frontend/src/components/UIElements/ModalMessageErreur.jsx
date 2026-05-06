@@ -1,6 +1,6 @@
 import React from "react";
 
-const ModalMessageErreur = ({ message, Onclose }) => {
+const ModalMessageErreur = ({ message, onClose }) => {
   if (!message) return null;
 
   return (
