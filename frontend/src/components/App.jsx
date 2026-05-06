@@ -48,15 +48,15 @@ const router = createBrowserRouter([
 
 const App = () => {
   const [token, setToken] = useState(null);
-  const [userId, setUserId] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const login = useCallback((uid, token) => {
+  const login = useCallback((token, userData) => {
     setToken(token);
-    setUserId(uid);
+    setUser(userData);
   }, []);
   const logout = useCallback(() => {
     setToken(null);
-    setUserId(null);
+    setUser(null);
   }, []);
   if (token !== null) {
     return (
@@ -64,7 +64,7 @@ const App = () => {
         value={{
           isLoggedIn: true,
           token: token,
-          userId: userId,
+          user: user,
           login: login,
           logout: logout,
         }}
@@ -78,7 +78,7 @@ const App = () => {
         value={{
           isLoggedIn: false,
           token: token,
-          userId: userId,
+          user: user,
           login: login,
           logout: logout,
         }}

@@ -35,7 +35,12 @@ export default function Login() {
           "Content-Type": "application/json",
         },
       );
-      auth.login(response.userId, response.token);
+      const userData = {
+        id: response.userId,
+        username: response.username,
+        perms: response.perms,
+      };
+      auth.login(response.token, userData);
       navigate("/hub");
     } catch (err) {
       console.error(err);

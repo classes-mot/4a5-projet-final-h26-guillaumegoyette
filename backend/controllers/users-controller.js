@@ -55,7 +55,8 @@ const login = (req, res, next) => {
     }
     res.status(201).json({
       userId: identifiedUser.id,
-      email: identifiedUser.email,
+      username: identifiedUser.username,
+      perms: identifiedUser.perms,
       token: token,
     });
   }
