@@ -1,12 +1,15 @@
 import express from "express";
 import userRoutes from "./routes/users-routes.js";
-import musicRoutes from "./routes/music-routes.js";
+//import musicRoutes from "./routes/music-routes.js";
 
 import errorHandler from "./handler/error-handler.js";
 import { connectDB } from "./utils/bd.js";
 
+console.log("Connection DB");
+
 await connectDB();
 
+console.log("CreationApp");
 const app = express();
 
 app.use(express.json());
@@ -23,7 +26,7 @@ app.use((req, res, next) => {
 
 app.use("/api/users", userRoutes);
 
-app.use("/api/music", musicRoutes);
+//app.use("/api/music", musicRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Route non Trouve");
