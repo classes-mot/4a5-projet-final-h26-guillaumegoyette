@@ -6,13 +6,13 @@ const RootLayout = ({ serverString }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout, isLoggedIn } = useContext(AuthContext);
-
+  console.log("CURRENT USER STATE:", user);
   const isHubPage = location.pathname === "/hub";
   const isModule =
     location.pathname !== "/" &&
     location.pathname !== "/hub" &&
     location.pathname !== "/register";
-  const isUserPage = location.pathname !== "user/:userid";
+  const isUserPage = location.pathname.startsWith("/users/");
 
   const handleLogout = () => {
     logout();
@@ -23,7 +23,7 @@ const RootLayout = ({ serverString }) => {
     <div className="app-container">
       <header>
         {isLoggedIn &&
-          isModule &&
+          !isHubPage &&
           ((
             <button onClick={() => navigate("/hub")}> Back TRANSLATE </button>
           ) || (
@@ -34,11 +34,12 @@ const RootLayout = ({ serverString }) => {
         )}
         <strong>{serverString}</strong>
         {isLoggedIn && isModule && !isUserPage && (
-          <button onClick={() => navigate(`/user/${user?.id}/${location}`)}>
+          <button onClick={() => navigate(`/users/${user?.id}/${location}`)}>
             {" "}
             {user.username}{" "}
           </button>
         )}
+
         {isLoggedIn && isHubPage && (
           <button onClick={() => navigate(`/users/${user.id}`)}>
             {user.username}

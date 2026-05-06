@@ -42,16 +42,20 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const [token, setToken] = useState(null);
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   const login = useCallback((token, userData) => {
     setToken(token);
     setUser(userData);
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(userData));
   }, []);
   const logout = useCallback(() => {
     setToken(null);
     setUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   }, []);
   if (token !== null) {
     return (

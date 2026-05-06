@@ -39,7 +39,11 @@ export default function Register() {
         throw new Error(responseData.message || "Registration Failed");
       }
       setIsLoading(false);
-      auth.login(responseData.token, responseData.user);
+      auth.login(responseData.token, {
+        id: responseData.id,
+        username: responseData.username,
+        perms: responseData.perms,
+      });
       navigate("/");
     } catch (err) {
       setError(
@@ -78,11 +82,11 @@ export default function Register() {
                 <label htmlFor="confirm-password">
                   Confirm password *TRANSLATE*
                 </label>
-
+                "
                 <input
                   id="confirm-password"
                   type="password"
-                  name="confirm-password"
+                  name="confiorm-password"
                   required
                 />
                 {passwordAreNotEqual ? (

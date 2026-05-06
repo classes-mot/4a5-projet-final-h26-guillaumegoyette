@@ -36,7 +36,7 @@ export default function Login() {
         },
       );
       const userData = {
-        id: response.userId,
+        id: response.id,
         username: response.username,
         perms: response.perms,
       };

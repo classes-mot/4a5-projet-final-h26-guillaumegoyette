@@ -7,18 +7,26 @@ import { AuthContext } from "../../../context/auth-context";
 
 export default function UserPage() {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  const { user, logout, isLoggedIn } = useContext(AuthContext);
   const { userId } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  if (!user) {
+    return (
+      <div className="error-msg">Loading user data or session expired...</div>
+    );
+  }
+  console.log("ID from URL (userId):", userId);
+  console.log("ID from Context (user.id):", user?.id);
   if (userId !== user.id) {
     return <div>You are not authorized to view this profile.</div>;
   }
 
   const MODULE_CONFIG = {
-    login: { label: "Admin Panel", path: null },
+    admin: { label: "Admin Panel", path: null },
     music: { label: "Music Module", path: "/module/music" },
   };
 
@@ -31,7 +39,7 @@ export default function UserPage() {
     try {
       setIsLoading(true);
       const response = await fetch(
-        "http://localhost:5000/api/users/$id/permsChange",
+        `http://localhost:5000/api/users/${userId}/permsChange`,
         {
           method: "PATCH",
           headers: {
@@ -46,8 +54,8 @@ export default function UserPage() {
         throw new Error(responseData.message || "Code Changed Failed");
       }
       setIsLoading(false);
-      auth.login(responseData.token, responseData.user);
-      navigate("/");
+      auth.login(responseData.token, responseData);
+      navigate("/hub");
     } catch (err) {
       setError(
         err.message || "There's been an error, try again later. TRANSLATE",

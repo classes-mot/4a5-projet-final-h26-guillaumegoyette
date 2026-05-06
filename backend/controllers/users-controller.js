@@ -51,7 +51,7 @@ const login = (req, res, next) => {
       console.log("Logged in!");
       token = jwt.sign(
         {
-          userId: identifiedUser.id,
+          id: identifiedUser.id,
           username: identifiedUser.username,
           perms: identifiedUser.perms,
         },
@@ -69,7 +69,7 @@ const login = (req, res, next) => {
       return next(error);
     }
     res.status(201).json({
-      userId: identifiedUser.id,
+      id: identifiedUser.id,
       username: identifiedUser.username,
       perms: identifiedUser.perms,
       token: token,
@@ -104,7 +104,7 @@ const register = (req, res, next) => {
   console.log("registered with no failure");
   const token = jwt.sign(
     {
-      userId: createdUser.id,
+      id: createdUser.id,
       username: createdUser.username,
       perms: createdUser.perms,
     },
@@ -114,7 +114,59 @@ const register = (req, res, next) => {
 
   res.status(201).json({
     token: token,
-    user: createdUser,
+    id: createdUser.id,
+    username: createdUser.username,
+    perms: createdUser.perms,
+  });
+};
+
+const permsChange = (req, res, next) => {
+  console.log("Changing access code/perms");
+  const userId = req.params.userId;
+  const { newCode } = req.body;
+
+  //IMPORTANT: TOCHANGE
+  const identifiedUser = MOCK_USERS.find((u) => u.id === userId);
+  if (!identifiedUser) {
+    res.status(401).json({
+      message: "Failed to find a matching ID",
+    });
+  }
+
+  //IMPORTANT: TO CHANGE
+  const codeData = MOCK_CODES.find((c) => c.code === newCode);
+  const newPerms = codeData ? codeData.perms : { admin: null, music: null };
+  console.log("NewPermsLoaded");
+
+  identifiedUser.perms = newPerms;
+  console.log("UpdatedUser");
+  let token;
+  try {
+    console.log("Perms changed!");
+    token = jwt.sign(
+      {
+        id: identifiedUser.id,
+        username: identifiedUser.username,
+        perms: identifiedUser.perms,
+      },
+      //IMPORTANT: CHANGE THIS LATER
+      "cleSuperSecrete!",
+      { expiresIn: "1h" },
+    );
+    console.log(token);
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(
+      "Signing up failed, please try again later.",
+      500,
+    );
+    return next(error);
+  }
+  res.status(201).json({
+    id: identifiedUser.id,
+    username: identifiedUser.username,
+    perms: identifiedUser.perms,
+    token: token,
   });
 };
 
@@ -122,4 +174,5 @@ export default {
   getUsers,
   login,
   register,
+  permsChange,
 };
