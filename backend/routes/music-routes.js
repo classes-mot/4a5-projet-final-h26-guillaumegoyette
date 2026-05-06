@@ -8,3 +8,5 @@ const router = express.Router();
 router.use(checkAuth);
 
 router.post("/send", fileUpload.single("audio"), musicController.sendMusic);
+
+export default router;

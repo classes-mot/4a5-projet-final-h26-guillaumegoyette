@@ -1,7 +1,10 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import userRoutes from "./routes/users-routes.js";
-//import musicRoutes from "./routes/music-routes.js";
+import musicRoutes from "./routes/music-routes.js";
+import path from "path";
 
 import errorHandler from "./handler/error-handler.js";
 import { connectDB } from "./utils/bd.js";
@@ -12,8 +15,13 @@ console.log("Connection DB");
 
 console.log("CreationApp");
 const app = express();
+const musicPath = path.resolve(
+  process.env.MUSIC_UPLOAD_PATH || "uploads/music",
+);
 
 app.use(express.json());
+
+app.use("/uploads/music", express.static(musicPath));
 
 app.use(
   cors({
@@ -24,6 +32,7 @@ app.use(
 );
 
 app.use("/api/users", userRoutes);
+console.log("Upload path is:", process.env.MUSIC_UPLOAD_PATH);
 
 app.use("/api/music", musicRoutes);
 

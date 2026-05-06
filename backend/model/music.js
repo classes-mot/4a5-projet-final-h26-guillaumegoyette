@@ -12,4 +12,6 @@ const songSchema = new mongoose.Schema({
   imgLocation: String,
 });
 
+songSchema.index({ title: 1, artist: 1 }, { unique: true });
+
 export const Song = mongoose.model("Song", songSchema);
