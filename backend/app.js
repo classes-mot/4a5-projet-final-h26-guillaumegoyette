@@ -25,7 +25,7 @@ app.use(
 
 app.use("/api/users", userRoutes);
 
-//app.use("/api/music", musicRoutes);
+app.use("/api/music", musicRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Route non Trouve");

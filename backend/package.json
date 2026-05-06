@@ -17,6 +17,7 @@
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.4.1",
+    "multer": "^2.1.1",
     "nodemon": "^3.1.14",
     "router": "^2.2.0",
     "uuid": "^14.0.0"
