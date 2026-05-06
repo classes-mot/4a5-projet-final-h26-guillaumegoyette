@@ -13,6 +13,11 @@ const RootLayout = ({ serverString }) => {
     location.pathname !== "/hub" &&
     location.pathname !== "/register";
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <div className="app-container">
       <header>
@@ -23,18 +28,21 @@ const RootLayout = ({ serverString }) => {
           ) || (
             <button onClick={() => navigate("/")}> logout TRANSLATE </button>
           ))}
-        {isLoggedIn && isHubPage && (
-          <button onClick={() => navigate("/")}> Logout TRANSLATE </button>
+        {isLoggedIn && (
+          <button onClick={handleLogout}> Logout TRANSLATE </button>
         )}
         <strong>{serverString}</strong>
         {isLoggedIn && isModule && (
-          <button onClick={() => navigate(`/user/${location}`)}>
+          <button onClick={() => navigate(`/user/${user?.id}/${location}`)}>
             {" "}
             {user.username}{" "}
           </button>
         )}
         {isLoggedIn && isHubPage && (
-          <button onClick={() => navigate("/")}> {user.username} </button>
+          <button onClick={() => navigate(`/user/${user?.id}`)}>
+            {" "}
+            {user?.username}{" "}
+          </button>
         )}
       </header>
 

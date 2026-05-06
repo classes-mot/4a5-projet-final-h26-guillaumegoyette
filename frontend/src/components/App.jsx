@@ -9,6 +9,7 @@ import ErrorPage from "../Containers/ErrorPage";
 import { AuthContext } from "../context/auth-context";
 import Login from "./login/loginMain/Login";
 import Hub from "./login/hub/Hub";
+import Register from "./login/register/Register";
 
 const SERVER_NAME = import.meta.env.VITE_SERVER_NAME || "Default server";
 const SERVER_STRING = `MMDSA: ${SERVER_NAME}`;
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Login /> },
+      { path: "/register", element: <Register /> },
       { path: "*", element: <Navigate to="/" replace /> },
     ],
   },
@@ -60,7 +62,7 @@ const App = () => {
           logout: logout,
         }}
       >
-        <RouterProvider router={routerLogin} />
+        <RouterProvider router={routerLogin} key="logged-in" />
       </AuthContext.Provider>
     );
   } else {
@@ -74,7 +76,7 @@ const App = () => {
           logout: logout,
         }}
       >
-        <RouterProvider router={router} />
+        <RouterProvider router={router} key="logged-out" />
       </AuthContext.Provider>
     );
   }

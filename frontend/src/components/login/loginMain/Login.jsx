@@ -84,12 +84,17 @@ export default function Login() {
           </div>
 
           <div className="form-input">
-            <button className="button">Login**TRANSLATE*</button>
-            <Link to="/register">
-              <button className="button button-flat">
-                Register *TRANSLATE*
-              </button>
-            </Link>
+            <button type="submit" className="button">
+              Login**TRANSLATE*
+            </button>
+
+            <button
+              type="button"
+              className="button button-flat"
+              onClick={() => navigate("/register")}
+            >
+              Register *TRANSLATE*
+            </button>
           </div>
         </div>
       </form>
