@@ -11,6 +11,15 @@ let MOCK_USERS = [
   },
 ];
 
+const MOCK_CODES = [
+  {
+    b: {
+      music: "enjoyer",
+      admin: "null",
+    },
+  },
+];
+
 const getUsers = (req, res, next) => {
   setTimeout(() => {
     res.json({ users: MOCK_USERS });
@@ -62,7 +71,38 @@ const login = (req, res, next) => {
   }
 };
 
+const register = (req, res, next) => {
+  console.log("registering");
+  const { username, password, email, fullname, code } = req.body;
+  let perms = {};
+
+  //IMPORATNT= CHANGE LATER
+  const codeOk = MOCK_CODES.find((u) => u.code === code);
+  if (!codeOk) {
+    perms = { admin: null, music: null };
+  }
+
+  //IMPORTANT= CHANGE LATER
+  const hasUser = MOCK_USERS.find((u) => u.username === username);
+  if (hasUser) {
+    res.status(422).json({ message: "This username is already in use" });
+    return;
+  }
+  const createdUser = {
+    id: uuid(),
+    username,
+    password,
+    email,
+    fullname,
+    perms,
+  };
+  MOCK_USERS.push(createdUser);
+  console.log("registered");
+  res.status(201).json({ user: createdUser });
+};
+
 export default {
   getUsers,
   login,
+  register,
 };

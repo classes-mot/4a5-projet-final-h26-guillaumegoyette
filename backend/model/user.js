@@ -6,12 +6,12 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.UUID,
     default: () => randomUUID(), //supposer de generer un UUID
   },
-  user: { type: String, required: true },
+  username: { type: String, required: true },
   password: { type: String, required: true },
   fullName: { type: String, required: true },
   email: { type: String, required: true },
   //access( Ce qui donne access a tout les modules. Rajout de certain premade modules pour future proofing)
-  access: {
+  perms: {
     type: Map,
     of: mongoose.Schema.Types.Mixed,
     defaults: {
@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
       tokenGen: null,
       storage: null,
       AI: null,
+      admin: null,
     },
     required: true,
   },
