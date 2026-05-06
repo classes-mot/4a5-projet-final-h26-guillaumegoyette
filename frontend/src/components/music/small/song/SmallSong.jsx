@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../context/auth-context";
 import ModalMessageErreur from "../../../UIElements/ModalMessageErreur";
+import ModifySongModal from "../../../UIElements/ModifySongModal";
 
 export default function SmallSong({
   title,
@@ -12,6 +13,7 @@ export default function SmallSong({
   onUpdate,
 }) {
   const { user, token } = useContext(AuthContext);
+  const [isModifying, setIsModifying] = useState(false);
 
   const musicRole = user?.perms?.music;
 
@@ -43,6 +45,8 @@ export default function SmallSong({
     }
   };
 
+  const modSong = async () => {};
+
   return (
     <>
       <div className="small-song-card">
@@ -58,7 +62,9 @@ export default function SmallSong({
         </dl>
       </div>
       <div className="small-song-buttons">
-        {canModnDelete && <button>Modify</button>}
+        {canModnDelete && (
+          <button onClick={() => setIsModifying(true)}>Modify</button>
+        )}
         {canModnDelete && (
           <button
             onClick={() => {
@@ -69,6 +75,13 @@ export default function SmallSong({
           </button>
         )}
       </div>
+      {isModifying && (
+        <ModifySongModal
+          song={{ id, title, artist }}
+          onClose={() => setIsModifying(false)}
+          onUpdate={onUpdate}
+        />
+      )}
     </>
   );
 }
