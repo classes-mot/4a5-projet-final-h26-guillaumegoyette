@@ -12,7 +12,7 @@ export default function Hub() {
   const { user } = useContext(AuthContext);
   const userPerms = user.perms;
   const MODULE_CONFIG = {
-    music: { label: "Music", path: "/music" },
+    music: { label: "Music", path: "/module/music" },
   };
 
   return (

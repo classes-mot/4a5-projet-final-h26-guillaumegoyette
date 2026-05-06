@@ -39,9 +39,8 @@ const RootLayout = ({ serverString }) => {
           </button>
         )}
         {isLoggedIn && isHubPage && (
-          <button onClick={() => navigate(`/user/${user?.id}`)}>
-            {" "}
-            {user?.username}{" "}
+          <button onClick={() => navigate(`/users/${user.id}`)}>
+            {user.username}
           </button>
         )}
       </header>

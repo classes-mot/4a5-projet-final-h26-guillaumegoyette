@@ -10,6 +10,7 @@ import { AuthContext } from "../context/auth-context";
 import Login from "./login/loginMain/Login";
 import Hub from "./login/hub/Hub";
 import Register from "./login/register/Register";
+import UserPage from "./login/userPage/UserPage";
 
 const SERVER_NAME = import.meta.env.VITE_SERVER_NAME || "Default server";
 const SERVER_STRING = `MMDSA: ${SERVER_NAME}`;
@@ -21,6 +22,7 @@ const routerLogin = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "hub", element: <Hub /> },
+      { path: `users/:userId`, element: <UserPage /> },
       { path: "/", element: <Navigate to="/hub" replace /> },
     ],
   },
