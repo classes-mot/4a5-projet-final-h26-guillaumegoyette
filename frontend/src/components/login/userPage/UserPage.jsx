@@ -8,7 +8,7 @@ import { AuthContext } from "../../../context/auth-context";
 export default function UserPage() {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
-  const { user, logout, isLoggedIn } = useContext(AuthContext);
+  const { user, logout, isLoggedIn, token } = useContext(AuthContext);
   const { userId } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +19,6 @@ export default function UserPage() {
       <div className="error-msg">Loading user data or session expired...</div>
     );
   }
-  console.log("ID from URL (userId):", userId);
-  console.log("ID from Context (user.id):", user?.id);
   if (userId !== user.id) {
     return <div>You are not authorized to view this profile.</div>;
   }
@@ -44,6 +42,8 @@ export default function UserPage() {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+
+            Authorization: "Bearer " + auth.token,
           },
           body: JSON.stringify(data),
         },
