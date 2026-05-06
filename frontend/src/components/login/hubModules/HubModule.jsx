@@ -7,8 +7,13 @@ import Square from "../../UIElements/LoadingSquare";
 
 export default function HubModule(props) {
   const imgLocation = `../../../data/${props.label}`;
+  const navigate = useNavigate();
+  function navigateTo(label) {
+    navigate(`/${label}`);
+  }
+
   return (
-    <div className="module">
+    <div className="module" onClick={navigateTo(props.label)}>
       <span>{props.label}</span>
       <img src={imgLocation} className="module-image"></img>
     </div>

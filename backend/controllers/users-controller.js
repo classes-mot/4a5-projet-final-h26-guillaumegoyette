@@ -13,10 +13,16 @@ let MOCK_USERS = [
 
 const MOCK_CODES = [
   {
-    b: {
-      music: "enjoyer",
-      admin: "null",
-    },
+    code: "b",
+    perms: { music: "enjoyer", admin: "null" },
+  },
+  {
+    code: "a",
+    perms: { music: "admin", admin: "admin" },
+  },
+  {
+    code: "c",
+    perms: { music: "curator", admin: "null" },
   },
 ];
 
@@ -74,13 +80,11 @@ const login = (req, res, next) => {
 const register = (req, res, next) => {
   console.log("registering");
   const { username, password, email, fullname, code } = req.body;
-  let perms = {};
 
   //IMPORATNT= CHANGE LATER
-  const codeOk = MOCK_CODES.find((u) => u.code === code);
-  if (!codeOk) {
-    perms = { admin: null, music: null };
-  }
+  const codeData = MOCK_CODES.find((c) => c.code === code);
+  let perms = codeData ? codeData.perms : { admin: null, music: null };
+  console.log(`Code used: ${code}. Permissions assigned:`, perms);
 
   //IMPORTANT= CHANGE LATER
   const hasUser = MOCK_USERS.find((u) => u.username === username);
@@ -97,8 +101,21 @@ const register = (req, res, next) => {
     perms,
   };
   MOCK_USERS.push(createdUser);
-  console.log("registered");
-  res.status(201).json({ user: createdUser });
+  console.log("registered with no failure");
+  const token = jwt.sign(
+    {
+      userId: createdUser.id,
+      username: createdUser.username,
+      perms: createdUser.perms,
+    },
+    "cleSuperSecrete!",
+    { expiresIn: "1h" },
+  );
+
+  res.status(201).json({
+    token: token,
+    user: createdUser,
+  });
 };
 
 export default {
