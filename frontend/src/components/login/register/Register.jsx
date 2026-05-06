@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import "./Register.css";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
 import Square from "../../UIElements/LoadingSquare";
 import { AuthContext } from "../../../context/auth-context";
@@ -10,11 +10,16 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [passwordAreNotEqual, setPasswordAreNotEqual] = useState(false);
+  const navigate = useNavigate();
+
+  const clearError = () => setError(null);
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
+
     if (data.password !== data["confirm-password"]) {
       setPasswordAreNotEqual(true);
       return;
@@ -51,7 +56,7 @@ export default function Register() {
   return (
     <>
       <div>
-        {isLoading && <Squared />}
+        {isLoading && <Square />}
         <ModalMessageErreur message={error} onClose={() => clearError()} />
       </div>
       <form onSubmit={handleSubmit}>
@@ -66,12 +71,20 @@ export default function Register() {
 
             <div className="reg-PasswordControl">
               <div className="input_line">
-                <label htmlFor="password">Password *TRANSLATE*</label>"
+                <label htmlFor="password">Password *TRANSLATE*</label>
                 <input id="password" type="password" name="password" required />
               </div>
               <div className="input_line">
-                <label htmlFor="password">Confirm password *TRANSLATE*</label>"
-                <input id="password" type="password" name="password" required />
+                <label htmlFor="confirm-password">
+                  Confirm password *TRANSLATE*
+                </label>
+
+                <input
+                  id="confirm-password"
+                  type="password"
+                  name="confirm-password"
+                  required
+                />
                 {passwordAreNotEqual ? (
                   <div className="reg-PassError">
                     <p>TRANSLATE password must match</p>
@@ -81,15 +94,15 @@ export default function Register() {
             </div>
           </div>
           <div className="input_line">
-            <label htmlFor="email">email *TRANSLATE*</label>"
+            <label htmlFor="email">email *TRANSLATE*</label>
             <input id="email" type="email" name="email" required />
           </div>
           <div className="input_line">
-            <label htmlFor="fullname">fullname *TRANSLATE*</label>"
+            <label htmlFor="fullname">fullname *TRANSLATE*</label>
             <input id="fullname" type="fullname" name="fullname" required />
           </div>
           <div className="input_line">
-            <label htmlFor="code">Access code *TRANSLATE*</label>"
+            <label htmlFor="code">Access code *TRANSLATE*</label>
             <input id="code" type="code" name="code" required />
           </div>
 
