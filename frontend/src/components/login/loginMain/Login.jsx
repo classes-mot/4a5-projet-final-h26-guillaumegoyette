@@ -83,14 +83,14 @@ export default function Login() {
             />
           </div>
 
-          <p className="form-input">
+          <div className="form-input">
             <button className="button">Login**TRANSLATE*</button>
             <Link to="/register">
               <button className="button button-flat">
                 Register *TRANSLATE*
               </button>
             </Link>
-          </p>
+          </div>
         </div>
       </form>
     </>

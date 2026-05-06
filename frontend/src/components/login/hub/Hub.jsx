@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/auth-context";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
 import Square from "../../UIElements/LoadingSquare";
-import HubHeader from "../hubHeader/HubHeader";
 import HubModule from "../hubModules/HubModule";
 
 export default function Hub() {
@@ -18,7 +17,6 @@ export default function Hub() {
 
   return (
     <>
-      <HubHeader />
       <div className="hubSquare">
         {Object.keys(MODULE_CONFIG).map((key) => {
           const hasPermission = user.perms && user.perms[key];
