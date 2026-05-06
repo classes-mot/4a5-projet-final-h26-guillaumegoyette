@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import userRoutes from "./routes/users-routes.js";
 //import musicRoutes from "./routes/music-routes.js";
 
@@ -10,8 +11,6 @@ console.log("Connection DB");
 await connectDB();
 
 console.log("CreationApp");
-const express = require("express");
-const cors = require("cors");
 const app = express();
 
 app.use(express.json());
