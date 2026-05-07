@@ -130,54 +130,44 @@ const register = async (req, res, next) => {
   }
 };
 
-const permsChange = (req, res, next) => {
+const permsChange = async (req, res, next) => {
   console.log("Changing access code/perms");
   const userId = req.params.userId;
   const { newCode } = req.body;
 
   //IMPORTANT: TOCHANGE
-  const identifiedUser = MOCK_USERS.find((u) => u.id === userId);
-  if (!identifiedUser) {
-    res.status(401).json({
-      message: "Failed to find a matching ID",
-    });
-  }
+  const MOCK_CODES = {
+    b: { music: "enjoyer", admin: null },
+    a: { music: "admin", admin: "admin" },
+    c: { music: "curator", admin: null },
+  };
 
-  //IMPORTANT: TO CHANGE
-  const codeData = MOCK_CODES.find((c) => c.code === newCode);
-  const newPerms = codeData ? codeData.perms : { admin: null, music: null };
-  console.log("NewPermsLoaded");
+  const newPerms = MOCK_CODES[newCode] || { admin: null, music: null };
 
-  identifiedUser.perms = newPerms;
-  console.log("UpdatedUser");
-  let token;
   try {
-    console.log("Perms changed!");
-    token = jwt.sign(
-      {
-        id: identifiedUser.id,
-        username: identifiedUser.username,
-        perms: identifiedUser.perms,
-      },
-      //IMPORTANT: CHANGE THIS LATER
-      "cleSuperSecrete!",
-      { expiresIn: "1h" },
+    const user = await User.findById(userId);
+    if (!user) {
+      return next(new HttpError("Failed to find a matching ID", 404));
+    }
+
+    user.perms = newPerms;
+    await user.save();
+
+    const token = jwt.sign(
+      { id: user._id, username: user.username, perms: user.perms },
+      JWT_SECRET,
+      { expirexIn: "1h" },
     );
-    console.log(token);
+
+    res.status(200).json({
+      id: user_.id,
+      username: user.username,
+      perms: user.perms,
+      token: token,
+    });
   } catch (err) {
-    console.log(err);
-    const error = new HttpError(
-      "Signing up failed, please try again later.",
-      500,
-    );
-    return next(error);
+    return next(new HttpError("Updating permission failed.", 500));
   }
-  res.status(201).json({
-    id: identifiedUser.id,
-    username: identifiedUser.username,
-    perms: identifiedUser.perms,
-    token: token,
-  });
 };
 
 export default {
