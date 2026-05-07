@@ -11,10 +11,11 @@ export default function MusicMain() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const auth = useContext(AuthContext);
+  const BACKEND = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
   const fetchLastest = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/music/lastSong", {
+      const response = await fetch(`${BACKEND}/api/music/lastSong`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + auth.token,
@@ -42,13 +43,10 @@ export default function MusicMain() {
     setSearchQuery(query);
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/music/songs/${query}`,
-        {
-          method: "GET",
-          headers: { authorization: "Bearer " + auth.token },
-        },
-      );
+      const response = await fetch(`${BACKEND}/api/music/songs/${query}`, {
+        method: "GET",
+        headers: { authorization: "Bearer " + auth.token },
+      });
       const data = await response.json();
       if (response.ok) {
         setSearchResults(data.songs || []);

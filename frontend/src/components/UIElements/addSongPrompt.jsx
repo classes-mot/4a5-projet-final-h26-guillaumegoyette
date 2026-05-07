@@ -6,7 +6,7 @@ const AddSongPrompt = ({ onClose, onSongAdded }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [metadata, setMetadata] = useState({ title: "", artist: "" });
   const [isLoading, setIsLoading] = useState(false);
-
+  const BACKEND = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -36,7 +36,7 @@ const AddSongPrompt = ({ onClose, onSongAdded }) => {
 
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:5000/api/music/send", {
+      const response = await fetch(`${BACKEND}/api/music/send`, {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,

@@ -17,7 +17,7 @@ import UserPage from "./login/userPage/UserPage";
 //Music
 import MusicMain from "./music/main/MusicMain";
 
-const BACKEND = import.meta.env.BACKEND || "http://localhost:5000";
+const BACKEND = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 const SERVER_NAME = import.meta.env.VITE_SERVER_NAME || "Default server";
 const SERVER_STRING = `MMDSA: ${SERVER_NAME}`;
 

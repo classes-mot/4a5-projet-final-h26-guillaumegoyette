@@ -14,6 +14,7 @@ export default function SmallSong({
 }) {
   const { user, token } = useContext(AuthContext);
   const [isModifying, setIsModifying] = useState(false);
+  const BACKEND = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
   const musicRole = user?.perms?.music;
   const canListen =
@@ -27,15 +28,12 @@ export default function SmallSong({
       return;
     }
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/music/${id}/delete`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
+      const response = await fetch(`${BACKEND}/api/music/${id}/delete`, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
         },
-      );
+      });
       const message = await response.json();
       if (response.ok) {
         console.log("The song has been deleted successfully.");
@@ -66,7 +64,7 @@ export default function SmallSong({
         {canListen && (
           <audio
             controls
-            src={`http://localhost:5000/api/music/${id}/streaming?token=${token}`}
+            src={`${BACKEND}/api/music/${id}/streaming?token=${token}`}
           >
             Your browser does not support the audio element.
           </audio>

@@ -13,6 +13,8 @@ export default function Register() {
 
   const clearError = () => setError(null);
 
+  const BACKEND = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -25,7 +27,7 @@ export default function Register() {
     }
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:5000/api/users/register", {
+      const response = await fetch(`${BACKEND}/api/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

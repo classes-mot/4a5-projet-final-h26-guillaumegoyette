@@ -8,6 +8,7 @@ import { useHttpClient } from "../../../hooks/http-hook";
 export default function Login() {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
+  const BACKEND = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [entredValues, setEntredValues] = useState({
@@ -27,7 +28,7 @@ export default function Login() {
     event.preventDefault();
     try {
       const response = await sendRequest(
-        "http://localhost:5000/api/users/login",
+        `${BACKEND}/api/users/login`,
         "POST",
         JSON.stringify(entredValues),
         {

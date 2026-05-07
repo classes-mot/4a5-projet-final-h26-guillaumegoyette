@@ -1,0 +1,6 @@
+{
+    "env": {
+        "PORT": 50000,
+        "MONGODB_URI": "mongodb+srv: //guillaumegface_db_user:GMMrvL9IZC0jW9RT@mmdsatest.6uvtoyl.mongodb.net/?appName=MMDSAtest"
+    }
+}

@@ -10,6 +10,7 @@ export default function UserPage() {
   const auth = useContext(AuthContext);
   const { user, logout, isLoggedIn, token } = useContext(AuthContext);
   const { userId } = useParams();
+  const BACKEND = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -37,7 +38,7 @@ export default function UserPage() {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:5000/api/users/${userId}/permsChange`,
+        `${BACKEND}/api/users/${userId}/permsChange`,
         {
           method: "PATCH",
           headers: {

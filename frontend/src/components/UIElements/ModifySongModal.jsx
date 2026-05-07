@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../../context/auth-context";
 
 const ModifySongModal = ({ song, onClose, onUpdate }) => {
+  const BACKEND = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   const { token } = useContext(AuthContext);
   const [metadata, setMetadata] = useState({
     title: song.title,
@@ -13,17 +15,14 @@ const ModifySongModal = ({ song, onClose, onUpdate }) => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `${BACKEND}/api/music/${song.id}/update`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-          body: JSON.stringify(metadata),
+      const response = await fetch(`${BACKEND}/api/music/${song.id}/update`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
-      );
+        body: JSON.stringify(metadata),
+      });
 
       if (response.ok) {
         onUpdate(); // Refresh the list in the parent
