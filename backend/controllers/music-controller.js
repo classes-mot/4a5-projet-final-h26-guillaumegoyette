@@ -7,13 +7,13 @@ let MOCK_MUSIC_LIST = [];
 
 const lastSong = async (req, res, next) => {
   try {
-    //const foundSong = await Song.findOne().sort({ _id: -1 });
-    const foundSong = MOCK_MUSIC_LIST[MOCK_MUSIC_LIST.length - 1];
+    const foundSong = await Song.findOne().sort({ _id: -1 });
+    /*const foundSong = MOCK_MUSIC_LIST[MOCK_MUSIC_LIST.length - 1];
     console.log(foundSong);
     if (!foundSong) {
       return res.status(404).json({ message: "No songs found" });
     }
-
+    */
     res.status(200).json({ song: foundSong });
   } catch {
     res.status(500).json({ message: "Fetching last song failed" });
@@ -23,17 +23,17 @@ const lastSong = async (req, res, next) => {
 const searchSongs = async (req, res, next) => {
   const query = req.params.query;
   //FOR MOCK
-  const results = MOCK_MUSIC_LIST.filter((song) => {
+  /*const results = MOCK_MUSIC_LIST.filter((song) => {
     const data = song._doc || song;
     const titleMatch = data.title?.toLowerCase().includes(query.toLowerCase());
     const artistMatch = data.artist
       ?.toLowerCase()
       .includes(query.toLowerCase());
     return titleMatch || artistMatch;
-  });
+  });*/
 
   //FOR BD
-  /*let results;
+  let results;
   try {
     results = await Song.find({
       $or: [
@@ -43,7 +43,7 @@ const searchSongs = async (req, res, next) => {
     });
   } catch (err) {
     return next(new HttpError("Searching failed, please try again.", 500));
-  } */
+  }
   res.status(200).json({
     songs: results.map((s) => s._doc || s),
   });
@@ -61,10 +61,10 @@ const streamSong = async (req, res, next) => {
   let song;
   console.log("Attemp to play song.");
   // MOCK CHECK
-  song = MOCK_MUSIC_LIST.find((s) => (s._id || s.id).toString() === songId);
+  //song = MOCK_MUSIC_LIST.find((s) => (s._id || s.id).toString() === songId);
 
   // FOR DB
-  /*
+
   if (!song) {
     try {
       song = await Song.findById(songId);
@@ -72,7 +72,6 @@ const streamSong = async (req, res, next) => {
       return next(new HttpError("Could not find song in database.", 500));
     }
   }
-  */
 
   if (!song) {
     return res.status(404).json({ message: "Song not found" });
@@ -100,15 +99,16 @@ const sendMusic = async (req, res, next) => {
 
   const { title, artist } = req.body;
 
-  /*try {
-    const existingSong = await Song.findOne({ title, artist });
-    
-    if (existingSong) {
-      // Delete the file Multer just uploaded since we don't need it
-      fs.unlink(req.file.path, (err) => { if (err) console.log(err); });
-      return next(new HttpError("This song is already in the library.", 422));
-    }
-  */
+  const existingSong = await Song.findOne({ title, artist });
+
+  if (existingSong) {
+    // Clean up the uploaded file if it's a duplicate
+    fs.unlink(req.file.path, (err) => {
+      if (err) console.log(err);
+    });
+    return next(new HttpError("This song is already in the library.", 422));
+  }
+
   const createdSong = new Song({
     title,
     artist: artist || "Unknown Artist",
@@ -120,8 +120,8 @@ const sendMusic = async (req, res, next) => {
 
   try {
     // HERE HERE FOR DATABSE!!:)
-    //await createdSong.save();
-    MOCK_MUSIC_LIST.push(createdSong);
+    await createdSong.save();
+    //MOCK_MUSIC_LIST.push(createdSong);
     res.status(201).json({ song: createdSong });
   } catch (err) {
     console.log(err);
@@ -134,11 +134,11 @@ const modifySong = async (req, res, next) => {
   const { title, artist } = req.body;
 
   //FOR MOCK
-  const songIndex = MOCK_MUSIC_LIST.findIndex(
-    (s) => (s._id || s.id).toString() === songId.toString(),
-  );
+  //const songIndex = MOCK_MUSIC_LIST.findIndex(
+  //  (s) => (s._id || s.id).toString() === songId.toString(),
+  //);
 
-  if (songIndex !== -1) {
+  /*if (songIndex !== -1) {
     // If it's a Mongoose object from 'new Song()', the data is in _doc
     const currentSongData =
       MOCK_MUSIC_LIST[songIndex]._doc || MOCK_MUSIC_LIST[songIndex];
@@ -154,33 +154,32 @@ const modifySong = async (req, res, next) => {
       song: MOCK_MUSIC_LIST[songIndex],
     });
   }
+*/
 
-  /*
   try {
     const updatedSong = await Song.findByIdAndUpdate(
       songId,
       { title, artist },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
     if (!updatedSong) return next(new HttpError("Could not find song.", 404));
     res.status(200).json({ message: "Chanson modifiée" });
   } catch (err) {
     return next(new HttpError("Update failed", 500));
   }
-  */
 };
 
 const deleteSong = async (req, res, next) => {
   const songId = req.params.songId;
   try {
     //FOR DB
-    //const song = await Song.findById(songId);
+    const song = await Song.findById(songId);
     //FOR MOCK
-    const songIndex = MOCK_MUSIC_LIST.findIndex(
+    /*const songIndex = MOCK_MUSIC_LIST.findIndex(
       (s) => (s._id || s.id).toString() === songId.toString(),
     );
     const song = MOCK_MUSIC_LIST[songIndex];
-
+*/
     if (!song) {
       return next(new HttpError("Could not find song for this id.", 404));
     }
@@ -193,9 +192,9 @@ const deleteSong = async (req, res, next) => {
       if (err) console.log("failed to delete file:", err);
     });
     //FOR DB
-    //await song.remove();
+    await song.deleteOne();
     //FOR MOCK
-    MOCK_MUSIC_LIST.splice(songIndex, 1);
+    //MOCK_MUSIC_LIST.splice(songIndex, 1);
 
     res.status(200).json({ message: "Deleted Song" });
   } catch (err) {
