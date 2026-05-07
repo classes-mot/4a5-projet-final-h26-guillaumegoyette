@@ -125,7 +125,9 @@ const sendMusic = async (req, res, next) => {
     res.status(201).json({ song: createdSong });
   } catch (err) {
     console.log(err);
-    return next(new HttpError("Saving song failed, try again.", 500));
+    console.error("DETAILED BACKEND ERROR:", err); // ADD THIS
+    return next(new HttpError(err.message || "Saving song failed", 500));
+    r;
   }
 };
 

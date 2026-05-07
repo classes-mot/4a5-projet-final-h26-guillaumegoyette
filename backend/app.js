@@ -9,12 +9,24 @@ import path from "path";
 import errorHandler from "./handler/error-handler.js";
 import { connectDB } from "./utils/bd.js";
 
+const port = process.env.LISTENPORT || 5000;
 console.log("Connection DB");
 
 await connectDB();
 
 console.log("CreationApp");
 const app = express();
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"], // Added OPTIONS
+    allowedHeaders: ["Content-Type", "Authorization"],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }),
+);
+
 const musicPath = path.resolve(
   process.env.MUSIC_UPLOAD_PATH || "uploads/music",
 );
@@ -22,14 +34,6 @@ const musicPath = path.resolve(
 app.use(express.json());
 
 app.use("/uploads/music", express.static(musicPath));
-
-app.use(
-  cors({
-    origin: "*", // In production, replace with your actual frontend URL
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
 
 app.use("/api/users", userRoutes);
 console.log("Upload path is:", process.env.MUSIC_UPLOAD_PATH);
@@ -44,6 +48,6 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-app.listen(5000, () => {
-  console.log("Serveur Ecoute sur", "http://localhost:5000");
+app.listen(port, () => {
+  console.log("Serveur Ecoute sur", port);
 });

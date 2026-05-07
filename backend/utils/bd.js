@@ -3,14 +3,25 @@ import mongoose from "mongoose";
 let isConnected = false;
 
 export const connectDB = async () => {
+  const uri = process.env.MONGODBLINK; // Define inside to ensure env is loaded
+
   if (isConnected) return;
-  let uri = "mongodb://localhost:27017/testMango";
+
+  if (!uri) {
+    console.error("ERREUR : MONGODBLINK n'est pas défini dans le fichier .env");
+    return;
+  }
+
   try {
+    console.log(
+      "Tentative de connexion à :",
+      uri.includes("mongodb+srv") ? "MongoDB Atlas" : "Localhost",
+    );
+
     await mongoose.connect(uri);
     isConnected = true;
-    console.log("Connextion MongoDb Reussie");
+    console.log("Connexion MongoDB Réussie");
   } catch (err) {
-    console.error("Erreur de connection MongoDb :", err.messsage);
-    process.exit(1);
+    console.error("Erreur de connexion MongoDB :", err.message);
   }
 };

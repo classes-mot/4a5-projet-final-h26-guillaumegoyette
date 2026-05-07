@@ -14,7 +14,7 @@ const ModifySongModal = ({ song, onClose, onUpdate }) => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/music/${song.id}/update`,
+        `${BACKEND}/api/music/${song.id}/update`,
         {
           method: "PATCH",
           headers: {

@@ -57,6 +57,7 @@ const login = async (req, res, next) => {
   }
 
   try {
+    console.log("Secret is:", JWT_SECRET);
     const token = jwt.sign(
       {
         id: identifiedUser._id,
@@ -68,7 +69,7 @@ const login = async (req, res, next) => {
     );
     res.status(200).json({
       id: identifiedUser._id,
-      usernname: identifiedUseer.username,
+      username: identifiedUser.username,
       perms: identifiedUser.perms,
       token: token,
     });
@@ -115,7 +116,8 @@ const register = async (req, res, next) => {
         id: createdUser._id,
         username: createdUser.username,
         perms: createdUser.perms,
-      }.JWT_SECRET,
+      },
+      JWT_SECRET,
       { expiresIn: "1h" },
     );
 
@@ -151,16 +153,17 @@ const permsChange = async (req, res, next) => {
     }
 
     user.perms = newPerms;
+    user.markModified("perms");
     await user.save();
 
     const token = jwt.sign(
       { id: user._id, username: user.username, perms: user.perms },
       JWT_SECRET,
-      { expirexIn: "1h" },
+      { expiresIn: "1h" },
     );
 
     res.status(200).json({
-      id: user_.id,
+      id: user._id,
       username: user.username,
       perms: user.perms,
       token: token,

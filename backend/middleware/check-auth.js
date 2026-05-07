@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import HttpError from "../utils/http-error.js";
 
+const JWT_SECRET = process.env.JWT_SECRET || "cleSuperSecrete";
+
 const checkAuth = (req, res, next) => {
   try {
     if (req.method === "OPTIONS") {
@@ -19,7 +21,7 @@ const checkAuth = (req, res, next) => {
       throw new Error("Authentication failed");
     }
 
-    const decodedToken = jwt.verify(token, "cleSuperSecrete!");
+    const decodedToken = jwt.verify(token, JWT_SECRET);
     console.log("---avant---");
     console.log(req.userData);
     req.userData = { userId: decodedToken.id || decodedToken.userId };
