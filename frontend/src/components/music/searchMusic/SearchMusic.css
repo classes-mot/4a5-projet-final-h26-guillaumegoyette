@@ -1,0 +1,48 @@
+/* Container to help with centering if needed */
+.search-bar-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* The actual input field */
+.search-bar-container input {
+  width: 100%;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-family: sans-serif;
+
+  /* Washed out white background */
+  background-color: rgba(255, 255, 255, 0.9);
+
+  /* Styling to match the rounded buttons */
+  border: 2px solid transparent;
+  border-radius: 30px;
+
+  /* Shadow for depth */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  outline: none;
+  transition: all 0.3s ease;
+  color: #37474f;
+}
+
+/* Placeholder color */
+.search-bar-container input::placeholder {
+  color: #90a4ae;
+  font-style: italic;
+}
+
+/* Focus effect: adds the cyan border and brightens the white */
+.search-bar-container input:focus {
+  background-color: #ffffff;
+  border-color: #00acc1;
+  box-shadow: 0 6px 15px rgba(0, 172, 193, 0.15);
+}
+
+/* Hover effect */
+.search-bar-container input:hover {
+  background-color: #ffffff;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+}
