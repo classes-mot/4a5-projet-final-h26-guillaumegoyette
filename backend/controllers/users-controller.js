@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 import { v4 as uuid } from "uuid";
+import { User } from "../model/user.js";
+import HttpError from "../utils/http-error.js";
 
+/*
 let MOCK_USERS = [
   {
     id: "u1",
@@ -25,55 +28,52 @@ const MOCK_CODES = [
     perms: { music: "curator", admin: "null" },
   },
 ];
+*/
+const JWT_SECRET = process.env.JWT_SECRET || "cleSuperSecrete";
 
-const getUsers = (req, res, next) => {
-  setTimeout(() => {
-    res.json({ users: MOCK_USERS });
-  }, 3000);
+const getUsers = async (req, res, next) => {
+  try {
+    const user = await User.find({}, "-password");
+    res.json({ users });
+  } catch (err) {
+    return next(new HttpError("Fetching users failed", 500));
+  }
 };
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
   const { username, password } = req.body;
-  console.log(username, password);
-  // IMPORANT = Change this thing later
-  const identifiedUser = MOCK_USERS.find(
-    (u) => u.username === username && u.password === password,
-  );
-  console.log(identifiedUser);
-  if (!identifiedUser) {
-    res.status(401).json({
-      message: "identification failed, check your username or password",
-    });
-  } else {
-    let token;
 
-    try {
-      console.log("Logged in!");
-      token = jwt.sign(
-        {
-          id: identifiedUser.id,
-          username: identifiedUser.username,
-          perms: identifiedUser.perms,
-        },
-        //IMPORTANT: CHANGE THIS LATER
-        "cleSuperSecrete!",
-        { expiresIn: "1h" },
-      );
-      console.log(token);
-    } catch (err) {
-      console.log(err);
-      const error = new HttpError(
-        "Signing up failed, please try again later.",
-        500,
-      );
-      return next(error);
-    }
-    res.status(201).json({
-      id: identifiedUser.id,
-      username: identifiedUser.username,
+  let identifiedUser;
+  try {
+    identifiedUser = await User.findOne({ username: username });
+  } catch (err) {
+    return next(new HttpError("Logging in failed, please try again.", 500));
+  }
+  // add crypt here later on()
+  if (!identifiedUser || identifiedUser.password !== password) {
+    return res.status(401).json({
+      message: "Identification failed, check your username or password",
+    });
+  }
+
+  try {
+    const token = jwt.sign(
+      {
+        id: identifiedUser._id,
+        username: identifiedUser.username,
+        perms: identifiedUser.perms,
+      },
+      JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+    res.status(200).json({
+      id: identifiedUser._id,
+      usernname: identifiedUseer.username,
       perms: identifiedUser.perms,
       token: token,
     });
+  } catch (err) {
+    return next(new HttpError("Token generation failed.", 500));
   }
 };
 
