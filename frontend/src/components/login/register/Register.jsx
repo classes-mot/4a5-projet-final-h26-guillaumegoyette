@@ -57,7 +57,7 @@ export default function Register() {
   }
 
   return (
-    <>
+    <div className="register-page-container">
       <div>
         {isLoading}
         <ModalMessageErreur message={error} onClose={() => clearError()} />
@@ -81,7 +81,7 @@ export default function Register() {
                 <label htmlFor="confirm-password">
                   Confirm password *TRANSLATE*
                 </label>
-                "
+
                 <input
                   id="confirm-password"
                   type="password"
@@ -116,6 +116,6 @@ export default function Register() {
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 }

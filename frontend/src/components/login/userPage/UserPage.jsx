@@ -69,7 +69,7 @@ export default function UserPage() {
   }
 
   return (
-    <>
+    <div className="profile-container">
       <div>
         <h2> Profile of {user.username}</h2>
         <h2> Your permissions</h2>
@@ -113,6 +113,6 @@ export default function UserPage() {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }

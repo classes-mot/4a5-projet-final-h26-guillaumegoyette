@@ -1,24 +1,20 @@
 import React from "react";
+import "./ModalMessageErreur.css";
 
 const ModalMessageErreur = ({ message, onClose }) => {
   if (!message) return null;
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: "20%",
-        left: "50%",
-        transform: "translate(-50%,-50%)",
-        backgroundColor: "white",
-        padding: "20px",
-        zIndex: 1000,
-      }}
-    >
-      <h2>Erreur *TRANSLATE*</h2>
-      <p>{message}</p>
-      <button onClick={onClose}>Fermer **TRANSLATE**</button>
-    </div>
+    <>
+      <div className="modal-backdrop" onClick={onClose} />
+      <div className="modal-container">
+        <h2>Error *TRANSLATE*</h2>
+        <p>{message}</p>
+        <button className="button" onClick={onClose}>
+          Close *TRANSLATE*
+        </button>
+      </div>
+    </>
   );
 };
 

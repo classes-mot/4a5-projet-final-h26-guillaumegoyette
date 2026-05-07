@@ -1,0 +1,144 @@
+/* UserPage.css */
+
+/* Centers the profile content in the middle of the screen */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1; /* Fills remaining space in <main> */
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Profiles use the same card style as Login/Register */
+.profile-card,
+form {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+}
+
+h2 {
+  text-align: center;
+  color: #37474f;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-family: sans-serif;
+}
+
+/* Permissions List Styling */
+dl {
+  margin: 0;
+}
+
+.perm-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #cfd8dc;
+}
+
+.perm-row:last-child {
+  border-bottom: none;
+}
+
+dt {
+  font-weight: bold;
+  color: #546e7a;
+}
+
+.access-granted {
+  color: #00897b; /* Greenish for access */
+  font-weight: 600;
+  background: #e0f2f1;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.access-denied {
+  color: #d32f2f; /* Reddish for no access */
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* Button & Input consistency */
+.input_line {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.input_line input {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 20px; /* Matching the header's rounded style */
+  background-color: #00acc1;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #00838f;
+}
+
+.error-msg {
+  text-align: center;
+  margin-top: 2rem;
+  color: #37474f;
+  font-weight: bold;
+}
+/* Specific button styling for the UserPage */
+.button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 25px; /* Fully rounded to match the header buttons */
+  background-color: #00acc1; /* Main Cyan color */
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
+
+/* Hover effect: darker cyan and slight lift */
+.button:hover:not(:disabled) {
+  background-color: #00838f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Active click effect */
+.button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled/Loading state */
+.button:disabled {
+  background-color: #b0bec5; /* Soft grey when disabled */
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* If you want a specific style for the confirm button vs others */
+.form-input .button {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

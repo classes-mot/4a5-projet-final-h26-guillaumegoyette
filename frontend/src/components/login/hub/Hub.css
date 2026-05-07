@@ -1,0 +1,77 @@
+/* Hub.css */
+
+/* The main container for your grid of modules */
+.hubSquare {
+  display: grid;
+  /* change '1fr' to '250px' (or whatever size you prefer) */
+  grid-template-columns: repeat(auto-fill, 250px);
+  gap: 2rem;
+  padding: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* This ensures that if there's only one, it stays on the left */
+  justify-content: start;
+}
+
+/* Optional: Center the whole grid container on the page, 
+   but keep the items inside aligned to the left */
+@media (max-width: 600px) {
+  .hubSquare {
+    grid-template-columns: 1fr; /* Stack on mobile */
+    justify-content: center;
+  }
+}
+
+/* Base style for each Module (assuming HubModule renders a div/link) */
+/* If HubModule is just a component, these styles should target its top-level element */
+.hub-module-item {
+  background-color: rgba(255, 255, 255, 0.9); /* Washed out white */
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s;
+  cursor: pointer;
+  text-decoration: none; /* In case it's a Link */
+  border: 1px solid #cfd8dc; /* Soft grey border */
+}
+
+.hub-module-item:hover {
+  transform: translateY(-5px); /* Lift effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* Brighter white on hover */
+  border-color: #00acc1; /* Cyan accent border */
+}
+
+/* Styling the text inside the module */
+.hub-module-item h3 {
+  color: #37474f;
+  margin: 10px 0 0 0;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Icon placeholder styling (if you add icons later) */
+.hub-module-icon {
+  font-size: 3rem;
+  color: #00acc1;
+}
+
+/* Responsive adjustment for mobile */
+@media (max-width: 600px) {
+  .hubSquare {
+    grid-template-columns: 1fr; /* One column on small screens */
+    padding: 1.5rem;
+  }
+
+  .hub-module-item {
+    height: 150px;
+  }
+}

@@ -1,3 +1,4 @@
+import "./MusicMain.css";
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/auth-context";

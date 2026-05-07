@@ -1,0 +1,73 @@
+/* Container to manage the full page height */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #e0f7fa; /* The soft cyan background */
+}
+
+/* Header Styling */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background-color: #cfd8dc; /* Soft Grey-Blue */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #b0bec5;
+  color: #37474f; /* Dark grey text */
+  font-family: sans-serif;
+}
+
+/* Centered Server String */
+header strong {
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  color: #263238;
+}
+
+/* User display styling */
+header span {
+  font-weight: 600;
+  margin-left: 10px;
+  color: #455a64;
+}
+
+/* Main content area expands to fill space */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Button Styling: Rounded and Grey-ish */
+header button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px; /* Fully rounded buttons */
+  border: 1px solid #90a4ae;
+  background-color: #eceff1; /* Very light grey */
+  color: #37474f;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+
+header button:hover {
+  background-color: #ffffff;
+  border-color: #00acc1; /* Cyan accent on hover */
+  color: #00acc1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Logout button specific style (optional) */
+header button:last-of-type {
+  margin-left: 10px;
+}
+
+/* Grouping buttons if you have multiple on one side */
+header div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

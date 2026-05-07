@@ -1,6 +1,7 @@
 import { useState, useCallback, useContext } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
+import "./Root.css";
 
 const RootLayout = ({ serverString }) => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const RootLayout = ({ serverString }) => {
     location.pathname !== "/hub" &&
     location.pathname !== "/register";
   const isUserPage = location.pathname.startsWith("/users/");
+  const isRegister = location.pathname === "/register";
 
   const handleLogout = () => {
     logout();
@@ -22,6 +24,12 @@ const RootLayout = ({ serverString }) => {
   return (
     <div className="app-container">
       <header>
+        {isRegister && (
+          <button onClick={() => navigate("/")}>
+            {" "}
+            back to login TRANSLATE{" "}
+          </button>
+        )}
         {isLoggedIn &&
           !isHubPage &&
           ((

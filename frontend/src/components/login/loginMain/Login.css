@@ -1,0 +1,99 @@
+/* Container that takes up the remaining screen space */
+body,
+html {
+  margin: 0;
+  height: 100%;
+}
+
+/* This targets the fragment/wrapper around your form */
+/* If your App.js has a main wrapper, ensure it allows this to fill space */
+form {
+  background-color: rgba(255, 255, 255, 0.9); /* Washed out white */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /* Limits form width on desktop */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Page background setup */
+/* Note: You might want to wrap your Login component in a div with this class */
+/* or apply this background to your main content area */
+:host,
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Takes all available vertical space */
+  background-color: #e0f7fa; /* Soft cyan/blue */
+}
+
+/* Typography */
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+  font-family: sans-serif;
+}
+
+/* Input Layout */
+.input_form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input_line {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input_line label {
+  font-weight: bold;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.input_line input {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Buttons */
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.button {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #00acc1; /* Darker cyan for the button */
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button:hover {
+  background-color: #00838f;
+}
+
+.button-flat {
+  background-color: transparent;
+  color: #00acc1;
+  border: 1px solid #00acc1;
+}
+
+.button-flat:hover {
+  background-color: #f0fdfc;
+}

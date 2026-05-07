@@ -1,0 +1,86 @@
+/* Layout container for the whole module */
+.search-barMain {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+/* Section Headings */
+.searchResults h2,
+.lastAdded h2 {
+  color: #37474f;
+  font-family: sans-serif;
+  padding-left: 2rem;
+  margin-bottom: 1.5rem;
+  border-left: 5px solid #00acc1; /* Cyan accent bar */
+}
+
+/* Grid for Search Results */
+.songs-grid {
+  display: grid;
+  /* Fixed size like the Hub tiles, keeps them lined up left to right */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0 2rem 3rem 2rem;
+}
+
+/* Adjusting the SmallSong container specifically within this layout */
+.lastAdded .SmallSong-wrapper {
+  max-width: 400px; /* Keeps the "Last Added" song from being huge */
+}
+
+/* Loading text */
+.lastAdded p {
+  color: #546e7a;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .songs-grid {
+    grid-template-columns: 1fr; /* Stack on mobile */
+  }
+
+  .searchResults h2,
+  .lastAdded h2 {
+    margin: 0 1rem 1rem 1rem;
+  }
+}
+
+/* Container for the centered search results */
+.searchResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the content horizontally */
+  width: 100%;
+}
+
+.songs-grid {
+  display: flex;
+  flex-direction: column; /* Stack vertically */
+  gap: 2rem;
+  width: 90%;
+  max-width: 800px; /* Makes the "box" large but contained */
+  padding: 2rem 0;
+}
+
+/* Centers the "Last Added" section specifically */
+.lastAdded {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 800px;
+  width: 90%;
+  background-color: rgba(207, 216, 220, 0.3);
+  padding: 2rem;
+  border-radius: 20px;
+}
+.songs-grid,
+.lastAdded {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the boxes horizontally */
+  padding: 20px;
+}

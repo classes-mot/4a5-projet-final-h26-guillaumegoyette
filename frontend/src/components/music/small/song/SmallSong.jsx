@@ -49,7 +49,7 @@ export default function SmallSong({
   const modSong = async () => {};
 
   return (
-    <>
+    <div className="song-item-container">
       <div className="small-song-card">
         <dl>
           <dt>title:</dt>
@@ -71,18 +71,23 @@ export default function SmallSong({
             Your browser does not support the audio element.
           </audio>
         )}
-        {canModnDelete && (
-          <button onClick={() => setIsModifying(true)}>Modify</button>
-        )}
-        {canModnDelete && (
-          <button
-            onClick={() => {
-              deleteSong();
-            }}
-          >
-            Delete
-          </button>
-        )}
+        <div className="admin-actions">
+          {canModnDelete && (
+            <button className="mod-btn" onClick={() => setIsModifying(true)}>
+              Modify
+            </button>
+          )}
+          {canModnDelete && (
+            <button
+              className="mod-btn"
+              onClick={() => {
+                deleteSong();
+              }}
+            >
+              Delete
+            </button>
+          )}
+        </div>
       </div>
       {isModifying && (
         <ModifySongModal
@@ -91,6 +96,6 @@ export default function SmallSong({
           onUpdate={onUpdate}
         />
       )}
-    </>
+    </div>
   );
 }

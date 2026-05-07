@@ -1,3 +1,4 @@
+import "./SearchMusic.css";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/auth-context";
@@ -13,10 +14,10 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <div>
+    <div className="search-bar-container">
       <input
         type="text"
-        placerholder="Search for a song..."
+        placeholder="Search for a song..."
         value={term}
         onChange={(e) => setTerm(e.target.value)}
         onKeyDown={handleKeyDown}

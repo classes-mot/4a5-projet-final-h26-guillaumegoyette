@@ -5,7 +5,7 @@ import { AuthContext } from "../../../context/auth-context";
 import ModalMessageErreur from "../../UIElements/ModalMessageErreur";
 
 export default function HubModule(props) {
-  const imgLocation = `../../../data/${props.label}`;
+  const imgLocation = `/img/${props.label}.png`;
   const navigate = useNavigate();
   function buttonNavigate() {
     navigate(props.path);

@@ -1,0 +1,53 @@
+.module {
+  position: relative; /* Essential for positioning the image inside */
+  height: 200px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9); /* Washed out white */
+  border-radius: 15px;
+  overflow: hidden; /* Clips the image to the rounded corners */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid #cfd8dc;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.module:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-color: #00acc1;
+}
+
+/* The label on top */
+.module span {
+  position: relative; /* Keeps text above the absolute image */
+  z-index: 2;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #37474f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  /* Adds a slight text shadow to make it readable over images */
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+}
+
+/* The background image */
+.module-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image fills the square without stretching */
+  opacity: 0.3; /* Makes it "washed out" behind the text */
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.module:hover .module-image {
+  opacity: 0.5; /* Brightens slightly on hover */
+}

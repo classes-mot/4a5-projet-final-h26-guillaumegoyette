@@ -47,7 +47,7 @@ export default function Login() {
   };
 
   return (
-    <>
+    <div className="login-page-container">
       <div>
         {isLoading}
         <ModalMessageErreur message={error} onClose={() => clearError()} />
@@ -70,7 +70,7 @@ export default function Login() {
           </div>
 
           <div className="input_line">
-            <label htmlFor="password">Password *TRANSLATE*</label>"
+            <label htmlFor="password">Password *TRANSLATE*</label>
             <input
               id="password"
               type="password"
@@ -97,6 +97,6 @@ export default function Login() {
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 }

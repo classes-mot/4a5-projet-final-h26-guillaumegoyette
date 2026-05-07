@@ -1,0 +1,143 @@
+.music-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Aligns items to the left */
+  padding: 0.5rem 2.5rem;
+  background-color: #cfd8dc; /* Soft Grey to match the Root header */
+  border-bottom: 1px solid #b0bec5;
+  min-height: 40px;
+  gap: 20px;
+}
+
+/* The "Add Song" trigger */
+.add-song-trigger {
+  color: #37474f;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition:
+    color 0.2s,
+    transform 0.1s;
+}
+
+.add-song-trigger:hover {
+  color: #00acc1; /* Cyan accent on hover */
+}
+
+.add-song-trigger:active {
+  transform: scale(0.98);
+}
+
+/* A small "+" icon circle (optional, added in JSX below) */
+.add-icon {
+  background-color: #00acc1;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Future navigation links in this header */
+.music-header-nav {
+  display: flex;
+  gap: 15px;
+}
+
+.music-header-nav a {
+  text-decoration: none;
+  color: #546e7a;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.music-header-nav a:hover {
+  color: #00acc1;
+}
+
+.button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 25px; /* Fully rounded to match the header buttons */
+  background-color: #00acc1; /* Main Cyan color */
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
+
+/* Hover effect: darker cyan and slight lift */
+.button:hover:not(:disabled) {
+  background-color: #00838f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Active click effect */
+.button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled/Loading state */
+.button:disabled {
+  background-color: #b0bec5; /* Soft grey when disabled */
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* If you want a specific style for the confirm button vs others */
+.form-input .button {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.add-song-trigger {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+
+  /* Styling */
+  background-color: #00acc1; /* Cyan */
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 20px; /* Rounded pill shape */
+  cursor: pointer;
+
+  /* Effects */
+  transition: all 0.2s ease;
+  user-select: none; /* Prevents text highlighting on double click */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-song-trigger:hover {
+  background-color: #00838f; /* Darker cyan */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.add-song-trigger:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: styling for the "+" if you use the span I suggested earlier */
+.add-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-top: -1px; /* Visual alignment fix */
+}
