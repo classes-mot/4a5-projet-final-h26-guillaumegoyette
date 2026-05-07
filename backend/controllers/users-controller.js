@@ -77,47 +77,57 @@ const login = async (req, res, next) => {
   }
 };
 
-const register = (req, res, next) => {
+const register = async (req, res, next) => {
   console.log("registering");
+
   const { username, password, email, fullname, code } = req.body;
 
-  //IMPORATNT= CHANGE LATER
-  const codeData = MOCK_CODES.find((c) => c.code === code);
-  let perms = codeData ? codeData.perms : { admin: null, music: null };
-  console.log(`Code used: ${code}. Permissions assigned:`, perms);
+  try {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res
+        .status(422)
+        .json({ message: "This username is already in use" });
+    }
 
-  //IMPORTANT= CHANGE LATER
-  const hasUser = MOCK_USERS.find((u) => u.username === username);
-  if (hasUser) {
-    res.status(422).json({ message: "This username is already in use" });
-    return;
-  }
-  const createdUser = {
-    id: uuid(),
-    username,
-    password,
-    email,
-    fullname,
-    perms,
-  };
-  MOCK_USERS.push(createdUser);
-  console.log("registered with no failure");
-  const token = jwt.sign(
-    {
-      id: createdUser.id,
+    //add code collection here.
+    const MOCK_CODES = {
+      b: { music: "enjoyer", admin: null },
+      a: { music: "admin", admin: "admin" },
+      c: { music: "curator", admin: "null" },
+    };
+
+    const perms = MOCK_CODES[code] || { admin: null, music: null };
+
+    const createdUser = new User({
+      username,
+      //encrypt
+      password,
+      email,
+      fullName: fullname,
+      perms,
+    });
+
+    await createdUser.save();
+
+    const token = jwt.sign(
+      {
+        id: createdUser._id,
+        username: createdUser.username,
+        perms: createdUser.perms,
+      }.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+
+    res.status(201).json({
+      token: token,
+      id: createdUser._id,
       username: createdUser.username,
       perms: createdUser.perms,
-    },
-    "cleSuperSecrete!",
-    { expiresIn: "1h" },
-  );
-
-  res.status(201).json({
-    token: token,
-    id: createdUser.id,
-    username: createdUser.username,
-    perms: createdUser.perms,
-  });
+    });
+  } catch (err) {
+    return next(new HttpError("Registering failed, please try again", 500));
+  }
 };
 
 const permsChange = (req, res, next) => {
